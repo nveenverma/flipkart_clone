@@ -1,13 +1,14 @@
-const User = require('../models/user')
+const User = require('../../models/user')
 const jwt = require('jsonwebtoken')
 
+// Signup Logic
 exports.signup = (req, res) => {
     User.findOne({ email : req.body.email })
     .exec(( error, user ) => {
         // If user doesn't exists
         if (user) {
             return res.status(400).json({
-                message : 'User already registered'
+                message : 'Admin already registered'
             })
         }
     
@@ -23,7 +24,8 @@ exports.signup = (req, res) => {
             lastName,
             email,
             password,
-            username : Math.random().toString()
+            username : Math.random().toString(),
+            role: 'admin'
         })
         
         _user.save((error, data) => {
@@ -35,19 +37,21 @@ exports.signup = (req, res) => {
             
             if (data) {
                 res.status(201).json({
-                    message : 'User created successfully...!'
+                    message : 'Admin created successfully...!'
                 })
             }
         });
     });
 }
 
+// Signin Logic
 exports.signin = (req, res) => {
     User.findOne({ email : req.body.email })
     .exec((error, user) => {
         if (error) return res.status(400).json({ error });
         if (user) {
-            if (user.authenticate(req.body.password)) {
+
+            if (user.authenticate(req.body.password) && user.role=='admin') {
                 
                 // Generating JSON Web Token from the id returned
                 const token = jwt.sign({ _id : user._id }, process.env.JWT_TOKEN, { expiresIn : '1h' });
@@ -71,7 +75,7 @@ exports.signin = (req, res) => {
 
 exports.requireSignIn = (req, res, next) => {
     const token = req.headers.authorization.split(" ")[1];
-    const user = jwt.verify(token, process.JWT_TOKEN);
+    const user = jwt.verify(token, process.env.JWT_TOKEN);
     req.user = user;
     next();
 }
