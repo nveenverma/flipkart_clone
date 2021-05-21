@@ -7,6 +7,7 @@ const mongoose = require('mongoose')
 // routes
 const authRoutes = require("./routes/auth")
 const adminRoutes = require("./routes/admin/auth")
+const categoryRoutes = require("./routes/category")
 
 // Environment variable or you can say constants
 env.config();
@@ -31,6 +32,7 @@ app.use(express.json())
 // endpoint '/api' using express router
 app.use('/api', authRoutes);
 app.use('/api', adminRoutes);
+app.use('/api', categoryRoutes);
 
 // Listening to the server on below port
 app.listen(process.env.PORT, () => {

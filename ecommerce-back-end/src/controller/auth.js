@@ -51,7 +51,7 @@ exports.signin = (req, res) => {
             if (user.authenticate(req.body.password)) {
                 
                 // Generating JSON Web Token from the id returned
-                const token = jwt.sign({ _id : user._id }, process.env.JWT_TOKEN, { expiresIn : '1h' });
+                const token = jwt.sign({ _id : user._id, role : user.role }, process.env.JWT_TOKEN, { expiresIn : '1h' });
                 const { _id, firstName, lastName, email, role, fullName } = user;
                 
                 // Return JSON Web Token along with the user profile
@@ -68,11 +68,4 @@ exports.signin = (req, res) => {
             return res.status(400).json({ message : 'Something went wrong' });
         }
     })
-}
-
-exports.requireSignIn = (req, res, next) => {
-    const token = req.headers.authorization.split(" ")[1];
-    const user = jwt.verify(token, process.JWT_TOKEN);
-    req.user = user;
-    next();
 }
