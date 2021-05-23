@@ -3,6 +3,7 @@ const express = require('express')
 const env = require('dotenv')
 const app = express();
 const mongoose = require('mongoose')
+const path = require('path')
 
 // routes
 const authRoutes = require("./routes/auth")
@@ -30,6 +31,7 @@ mongoose.connect(
 
 // To parse the data passed in the requests, we use following middleware
 app.use(express.json())
+app.use('/public', express.static(path.join(__dirname, 'uploads')));
     
 // endpoint '/api' using express router
 app.use('/api', authRoutes);
