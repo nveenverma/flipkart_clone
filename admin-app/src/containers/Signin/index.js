@@ -1,23 +1,43 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Button, Col, Container, Form, Row } from 'react-bootstrap'
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
+import { Redirect } from 'react-router'
 
 import Layout from '../../components/Layout'
 import Input from "../../components/UI/Input"
-import { login } from "../../actions"
+import { isUserLoggedIn, login } from "../../actions"
 
 function Signin() {
 
+    // React Hooks
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    // const [error, setError] = useState('');
+    const auth = useSelector(state => state.auth)
     const dispatch = useDispatch();
+    
+    // This will run when the signin page loads and check if the user is already logged in
+    useEffect(() => {
+        if (!auth.authenticate) {
+            dispatch(isUserLoggedIn())        
+        }
+    }, [])
 
+
+    // This will run on submitting the Signin Form
     const userLogin = e => {
-
         e.preventDefault();
         
-        const user = { email : 'user@gmail.com', password : '123456'};
+        const user = { email, password };
         dispatch(login(user));
     }
 
+    // Once the user authenticates themselves, redirect them to Home Page
+    if (auth.authenticate) {
+        return <Redirect to={'/'} />
+    }
+
+    // Render below JSX from this component
     return (
         <Layout>
             <Container>
@@ -28,13 +48,16 @@ function Signin() {
                                 label="Email address"
                                 type="email" 
                                 placeholder="Enter email"
-                                errorMessage="We'll never share your email with anyone else."                                                                
+                                value={email}
+                                handleChange={(e) => setEmail(e.target.value)}                                                           
                             />
 
                             <Input 
                                 label="Password"
-                                type="password" 
-                                placeholder="Password"                                
+                                type="password"
+                                placeholder="Password"                  
+                                value={password} 
+                                handleChange={e => setPassword(e.target.value)}              
                             />
                             <Button variant="primary" type="submit">
                                 Submit

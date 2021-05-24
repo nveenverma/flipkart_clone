@@ -4,6 +4,7 @@ const env = require('dotenv')
 const app = express();
 const mongoose = require('mongoose')
 const path = require('path')
+const cors = require("cors")
 
 // routes
 const authRoutes = require("./routes/auth")
@@ -29,7 +30,8 @@ mongoose.connect(
     console.log("Database Connected");
 })
 
-// To parse the data passed in the requests, we use following middleware
+// Using middleware
+app.use(cors());
 app.use(express.json())
 app.use('/public', express.static(path.join(__dirname, 'uploads')));
     

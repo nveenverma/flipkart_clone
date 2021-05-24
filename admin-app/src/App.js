@@ -4,6 +4,8 @@ import './App.css';
 import Home from "./containers/Home";
 import Signin from "./containers/Signin";
 import Signup from "./containers/Signup";
+import PrivateRoute from "./components/HOC/PrivateRoute"
+
 
 function App() {
   return (
@@ -11,9 +13,9 @@ function App() {
       <Router>
 
           <Switch>
+            <PrivateRoute path='/' exact component={Home} />
             <Route path='/signin' component={Signin} />
             <Route path='/signup' component={Signup} />
-            <Route path='/' component={Home} />          
         </Switch>
       </Router>
     </div>

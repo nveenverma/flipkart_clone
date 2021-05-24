@@ -1,12 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Form } from 'react-bootstrap'
 
-function Input({ label, type, placeholder, errorMessage="", ...restProps}) {
+function Input({ label, type, placeholder, errorMessage="", value, handleChange, ...restProps}) {
 
-    const [value, setValue] = useState("");
-    const handleChange = e => {
-        setValue(e.target.value);
-    }
     return (
         <Form.Group controlId="formBasicEmail">
             <Form.Label>{ label }</Form.Label>
