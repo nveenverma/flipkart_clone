@@ -49,6 +49,14 @@ const authReducer = (state = initialState, action) => {
             }
             break;
 
+        // Changing state if login Failure action type
+        case authConstants.LOGOUT_REQUEST : 
+            state = {               
+                ...initialState,
+                
+            }
+            break;
+
         // Keep the state as it is for any default action type
         default :
             state = { ...state }

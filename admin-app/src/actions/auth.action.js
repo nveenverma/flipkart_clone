@@ -62,3 +62,13 @@ export const isUserLoggedIn = () => {
         }
     }
 }
+
+
+// Action Creater which dispatches actions based on if the user is logged in or not
+export const signout = () => {
+    return async dispatch => {
+        localStorage.clear();
+
+        dispatch({ type : authConstants.LOGOUT_REQUEST });
+    }
+}

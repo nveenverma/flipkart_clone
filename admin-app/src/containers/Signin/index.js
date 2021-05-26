@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Button, Col, Container, Form, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from "react-redux"
 import { Redirect } from 'react-router'
 
 import Layout from '../../components/Layout'
 import Input from "../../components/UI/Input"
-import { isUserLoggedIn, login } from "../../actions"
+import { login } from "../../actions"
 
 function Signin() {
 
@@ -15,14 +15,6 @@ function Signin() {
     // const [error, setError] = useState('');
     const auth = useSelector(state => state.auth)
     const dispatch = useDispatch();
-    
-    // This will run when the signin page loads and check if the user is already logged in
-    useEffect(() => {
-        if (!auth.authenticate) {
-            dispatch(isUserLoggedIn())        
-        }
-    }, [])
-
 
     // This will run on submitting the Signin Form
     const userLogin = e => {
