@@ -10,7 +10,10 @@ const initialState = {
         picture : ''
     },
     authenticate : false,
-    authenticating : false
+    authenticating : false,
+    loading : false,
+    error : null,
+    message : ''
 };
 
 // Reducer which updates central store based on the action type dispatched
@@ -49,13 +52,32 @@ const authReducer = (state = initialState, action) => {
             }
             break;
 
-        // Changing state if login Failure action type
+        // Changing state if logout Request action type
         case authConstants.LOGOUT_REQUEST : 
             state = {               
-                ...initialState,
-                
+                ...state,
+                loading : true
             }
             break;
+
+        // Changing state if logout Success action type
+        case authConstants.LOGOUT_SUCCESS : 
+            state = {               
+                ...initialState,
+                loading : false,
+                authenticate : false
+            }
+            break;
+            
+        // Changing state if logout Failure action type
+        case authConstants.LOGOUT_FAILURE : 
+            state = {               
+                ...state,
+                loading : false,
+                error : action.payload.error
+            }
+            break;            
+        
 
         // Keep the state as it is for any default action type
         default :

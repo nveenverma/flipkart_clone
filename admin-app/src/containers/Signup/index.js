@@ -34,11 +34,6 @@ function Signup() {
         return <p>Loading ....!</p>
     }
 
-    // // Once the user authenticates themselves, redirect them to Home Page
-    // if (userReducer.created) {
-    //     return <Redirect to={'/signin'} />
-    // }
-
     return (
         <Layout>
             <Container>

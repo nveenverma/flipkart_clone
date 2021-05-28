@@ -4,7 +4,7 @@ import { userConstants } from "./constants"
 // Signup Action Creater
 export const signup = (user) => {
 
-    console.log(user);
+    // console.log(user);
 
     // Below code is run in sequence dispatching several actions when user is trying to log in
     return async (dispatch) => {

@@ -17,7 +17,7 @@ function Header () {
       return (
           <Nav>
             <li className="nav-item">
-              <span className="nav-link" onClick={logout} >Signout</span>
+              <span className="nav-link" onClick={logout} style={{ cursor : "pointer" }} >Signout</span>
             </li>
           </Nav>
       )
@@ -50,9 +50,9 @@ function Header () {
                 <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
               </NavDropdown> */}
             </Nav>          
-            {
-              auth.authenticate ? renderLoggedInLinks() : renderNonLoggedInLinks()
-            }
+              {
+                auth.authenticate ? renderLoggedInLinks() : renderNonLoggedInLinks()
+              }
           </Navbar.Collapse>
         </Navbar>
     )

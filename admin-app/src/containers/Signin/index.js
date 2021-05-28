@@ -12,9 +12,9 @@ function Signin() {
     // React Hooks
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    // const [error, setError] = useState('');
     const auth = useSelector(state => state.auth)
     const dispatch = useDispatch();
+    // const [error, setError] = useState('');
 
     // This will run on submitting the Signin Form
     const userLogin = e => {

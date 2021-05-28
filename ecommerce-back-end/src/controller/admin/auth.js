@@ -56,6 +56,7 @@ exports.signin = (req, res) => {
                 // Generating JSON Web Token from the id returned
                 const token = jwt.sign({ _id : user._id, role : user.role }, process.env.JWT_TOKEN, { expiresIn : '1h' });
                 const { _id, firstName, lastName, email, role, fullName } = user;
+                res.cookie('token', token, { expiresIn : '1h' });
                 
                 // Return JSON Web Token along with the user profile
                 return res.status(200).json({
@@ -71,4 +72,14 @@ exports.signin = (req, res) => {
             return res.status(400).json({ message : 'Something went wrong' });
         }
     })
+}
+
+// Signout Logic
+exports.signout = (req, res) => {
+
+    res.clearCookie('token');
+    res.status(200).json({
+        message : 'Signout Successfully'
+    });
+    
 }

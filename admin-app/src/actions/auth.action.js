@@ -4,7 +4,7 @@ import { authConstants } from "./constants"
 // Login Action Creater
 export const login = (user) => {
 
-    console.log(user);
+    // console.log(user);
 
     // Below code is run in sequence dispatching several actions when user is trying to log in
     return async (dispatch) => {
@@ -47,7 +47,7 @@ export const isUserLoggedIn = () => {
         const token = localStorage.getItem('token');
 
         if (token) {
-            const user = localStorage.getItem('user')
+            const user = JSON.parse(localStorage.getItem('user')); 
             dispatch({ 
                 type : authConstants.LOGIN_SUCCESS,
                 payload : {
@@ -64,11 +64,40 @@ export const isUserLoggedIn = () => {
 }
 
 
-// Action Creater which dispatches actions based on if the user is logged in or not
+// Signout Action Creater
 export const signout = () => {
     return async dispatch => {
-        localStorage.clear();
 
         dispatch({ type : authConstants.LOGOUT_REQUEST });
+        const res = await axios.post('/admin/signout');
+
+        if ( res.status === 200 ) {
+            localStorage.clear();
+            dispatch({ type : authConstants.LOGOUT_SUCCESS });
+        } else {
+
+            // if (error.response){
+
+            // //do something
+            
+            // }else if(error.request){
+            
+            // //do something else
+            
+            // }else if(error.message){
+            
+            // //do something other than the other two
+            
+            // }
+
+            console.log(res)
+                
+
+            dispatch({ 
+                type : authConstants.LOGOUT_FAILURE,
+                payload : { error : res.data.error }
+            });
+        }
+
     }
 }
