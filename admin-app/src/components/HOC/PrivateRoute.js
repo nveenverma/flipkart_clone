@@ -1,21 +1,19 @@
 import React from "react"
 import { Route, Redirect } from "react-router-dom"
 
-const PrivateRoute = ({ component : Anycomponent, ...restProps }) => {
-    return <Route 
-                {...restProps} 
-                component={
-                    (props) => {
-                        const token = window.localStorage.getItem('token');
+const PrivateRoute = ({ ...restProps }) => {
 
-                        if (token) {
-                            return <Anycomponent {...props} />
-                        } else {
-                            return <Redirect to={"/signin"} />
-                        }
-                    }
-                }
-            />
+    const token = window.localStorage.getItem('token');
+
+    return (
+        <>
+            {
+                token ? 
+                <Route {...restProps} /> :
+                <Redirect to={"/signin"} />
+            }
+        </>
+    )
 }
 
 export default PrivateRoute

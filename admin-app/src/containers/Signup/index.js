@@ -14,7 +14,7 @@ function Signup() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const auth = useSelector(state => state.auth)
-    const userReducer = useSelector(state => state.userReducer)
+    const userReducer = useSelector(state => state.user)
     const dispatch = useDispatch();
 
     // This will run on submitting the Signup Form

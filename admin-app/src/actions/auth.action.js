@@ -72,31 +72,17 @@ export const signout = () => {
         const res = await axios.post('/admin/signout');
 
         if ( res.status === 200 ) {
+          
             localStorage.clear();
             dispatch({ type : authConstants.LOGOUT_SUCCESS });
+
         } else {
-
-            // if (error.response){
-
-            // //do something
-            
-            // }else if(error.request){
-            
-            // //do something else
-            
-            // }else if(error.message){
-            
-            // //do something other than the other two
-            
-            // }
-
-            console.log(res)
-                
-
+          
             dispatch({ 
                 type : authConstants.LOGOUT_FAILURE,
                 payload : { error : res.data.error }
             });
+        
         }
 
     }

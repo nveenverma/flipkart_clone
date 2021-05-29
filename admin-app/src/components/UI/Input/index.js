@@ -7,6 +7,7 @@ function Input({ label, type, placeholder, errorMessage="", value, handleChange,
         <Form.Group>
             <Form.Label>{ label }</Form.Label>
             <Form.Control 
+                label={label}
                 type={type} 
                 placeholder={placeholder} 
                 value={value}
