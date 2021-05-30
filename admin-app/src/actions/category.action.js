@@ -10,6 +10,8 @@ export const getAllCategory = () => {
         if (res.status === 200) {
 
             const { categoryList } = res.data;
+            console.log("Categories from Category Action: ", categoryList);
+
             dispatch({
                 type : categoryConstants.GET_ALL_CATEGORIES_SUCCESS,
                 payload : { categories : categoryList }

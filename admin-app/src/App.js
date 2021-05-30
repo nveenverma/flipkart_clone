@@ -7,7 +7,7 @@ import Home from "./containers/Home";
 import Signin from "./containers/Signin";
 import Signup from "./containers/Signup";
 import PrivateRoute from "./components/HOC/PrivateRoute"
-import { isUserLoggedIn } from "./actions"
+import { getAllCategory, getInitialData , isUserLoggedIn } from "./actions"
 import Products from "./containers/Products";
 import Orders from "./containers/Orders";
 import Categories from "./containers/Categories";
@@ -17,12 +17,16 @@ function App() {
   const dispatch = useDispatch();
   const auth = useSelector(state => state.auth);
 
-  // This will run when the signin page loads and check if the user is already logged in
+
+  // This will run when the page loads and check if the user is already logged in
   useEffect(() => {
     if (!auth.authenticate) {
-        dispatch(isUserLoggedIn())        
+        dispatch(isUserLoggedIn());
     }
-  }, [])
+    dispatch(getInitialData());
+    // dispatch(getAllCategory())
+
+  }, []);
 
   return (
     <div className="App">

@@ -21,11 +21,13 @@ function Layout ({ children, sidebar='' }) {
                             <li> <NavLink to={'/categories'}>Categories</NavLink> </li>
                         </ul>    
                     </Col>           
-                    <Col md={10} style={{ marginLeft : 'auto' }}>{ children }</Col>           
+                    <Col md={10} style={{ marginLeft : 'auto', paddingTop : '70px', paddingRight : '30px' }}>{ children }</Col>           
                 </Row>
             </Container> 
             : 
-            children
+            <div style={{ paddingTop : '70px'}}>
+                { children }
+            </div>                       
           }
         </>
     )

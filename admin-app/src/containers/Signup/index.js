@@ -69,8 +69,7 @@ function Signup() {
                                 type="email" 
                                 placeholder="Enter email"
                                 value={email}
-                                handleChange={(e) => setEmail(e.target.value)}   
-                                errorMessage="We'll never share your email with anyone else."                                                                
+                                handleChange={(e) => setEmail(e.target.value)}                                                               
                             />
                             <Input 
                                 label="Password"

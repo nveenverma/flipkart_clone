@@ -9,13 +9,25 @@ const initState = {
 const buildNewCategories = (parentId, categories, category) => {
     
     let categoriesArray = [];
+
+    if (parentId === undefined) {
+        return [
+            ...categories,
+            {
+                _id : category._id,
+                name : category.name,
+                slug : category.slug,
+                children : []
+            }
+        ];
+    }
  
     for (let cat of categories) {
 
         if (parentId === cat._id) {
             categoriesArray.push({
                 ...cat,
-                children : cat.children && cat.children.length > 0 ? 
+                children : cat.children ? 
                     buildNewCategories(parentId, [...cat.children, {
                         _id : category._id,
                         name : category.name,
@@ -28,7 +40,7 @@ const buildNewCategories = (parentId, categories, category) => {
         } else {
             categoriesArray.push({
                 ...cat,
-                children : cat.children && cat.children.length > 0 ? 
+                children : cat.children ? 
                     buildNewCategories(parentId, cat.children, category) : []
             })
         }
@@ -44,12 +56,15 @@ const categoryReducer =  (state = initState, action) => {
         // Changing the state based on actions dispatched while getting the categories list
         case categoryConstants.GET_ALL_CATEGORIES_REQUEST : 
             break;
+        
         case categoryConstants.GET_ALL_CATEGORIES_SUCCESS : 
             state = {
                 ...state,
-                categories : action.payload.categories
+                categories : action.payload.categories,
+                loading : true
             }
             break;
+
         case categoryConstants.GET_ALL_CATEGORIES_FAILURE : 
             state = {
                 ...initState,
@@ -85,12 +100,11 @@ const categoryReducer =  (state = initState, action) => {
             break;
 
         // State for default action type
-        default : {
+        default : 
             state = {
-                ...initState
+                ...state
             }
             break;
-        }
     }
 
     return state;
