@@ -18,7 +18,7 @@ const productReducer = (state=initState, action) => {
             
         default :
             state = {
-                ...initState
+                ...state
             }
             break;
     }
