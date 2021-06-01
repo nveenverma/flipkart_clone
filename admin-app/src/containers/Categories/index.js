@@ -88,7 +88,13 @@ function Categories() {
                 </Col>
             </Row>
 
-            <Modal show={show} handleClose={handleClose} modalTitle={'Add New Category'}>
+            <Modal 
+                show={show} 
+                handleClose={() => setShow(false)}
+                onSubmit={handleClose} 
+                modalTitle={'Add New Category'}
+                footer={"Save Changes"}
+            >
                 <Input
                     value={categoryName}
                     handleChange={e => setCategoryName(e.target.value)}

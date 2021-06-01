@@ -12,11 +12,14 @@ function CustomModal(props) {
             <Modal.Body>   
                 {props.children}                 
             </Modal.Body>
-            <Modal.Footer>
-                <Button variant="primary" onClick={props.handleClose}>
-                    Save Changes
-                </Button>
-            </Modal.Footer>
+            {
+                props.footer ?
+                <Modal.Footer>
+                    <Button variant="primary" onClick={props.onSubmit}>
+                        {props.footer}
+                    </Button>
+                </Modal.Footer> : null
+            }
         </Modal> 
     )
 }

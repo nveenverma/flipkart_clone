@@ -61,6 +61,7 @@ function Products() {
         show={show}
         handleClose={handleClose}
         modalTitle={"Add New Product"}
+        footer={"Save Changes"}
       >
         <Input
           label="Product Name"
@@ -192,7 +193,6 @@ function Products() {
       <Table striped bordered responsive="sm" style={{'marginTop' : '50px', 'fontSize' : '12px' }} >
         <thead>
           <tr>
-            <th>#</th>
             <th>Name</th>
             <th>Price</th>
             <th>Quantity</th>
@@ -203,7 +203,6 @@ function Products() {
           {product.products.length > 0
             ? product.products.map((item) => (
                 <tr onClick={() => showProductDetailsModal(item)} key={item._id}>
-                  <td>2</td>
                   <td>{item.name}</td>
                   <td>{item.price}</td>
                   <td>{item.quantity}</td>
