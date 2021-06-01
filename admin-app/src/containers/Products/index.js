@@ -59,7 +59,8 @@ function Products() {
 
       <Modal
         show={show}
-        handleClose={handleClose}
+        handleClose={() => setShow(false)}
+        onSubmit={handleClose}
         modalTitle={"Add New Product"}
         footer={"Save Changes"}
       >
