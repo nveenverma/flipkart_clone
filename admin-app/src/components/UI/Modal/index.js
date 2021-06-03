@@ -5,7 +5,7 @@ import { Modal, Button} from "react-bootstrap"
 
 function CustomModal(props) {
     return (
-        <Modal show={props.show} onHide={props.handleClose}>
+        <Modal show={props.show} onHide={props.handleClose} size={props.size}>
             <Modal.Header closeButton>
                 <Modal.Title>{props.modalTitle}</Modal.Title>
             </Modal.Header>
