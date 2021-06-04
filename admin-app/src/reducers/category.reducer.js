@@ -6,10 +6,8 @@ const initState = {
     error : null
 }
 
-const buildNewCategories = (parentId, categories, category) => {
+const buildNewCategories = (parentId, categories, category) => {    
     
-    let categoriesArray = [];
-
     if (parentId === undefined) {
         return [
             ...categories,
@@ -21,21 +19,22 @@ const buildNewCategories = (parentId, categories, category) => {
             }
         ];
     }
- 
+    
+    let categoriesArray = [];
+
     for (let cat of categories) {
 
         if (parentId === cat._id) {
+            const newCategory = {
+                _id : category._id,
+                name : category.name,
+                slug : category.slug,
+                parentId : category.parentId,
+                children : []
+            }
             categoriesArray.push({
                 ...cat,
-                children : cat.children ? 
-                    buildNewCategories(parentId, [...cat.children, {
-                        _id : category._id,
-                        name : category.name,
-                        slug : category.slug,
-                        parentId : category.parentId,
-                        categoryImage : category.categoryImage,
-                        children : category.children
-                    }], category) : []
+                children : cat.children.length > 0 ? [...cat.children, newCategory] : [newCategory]
             })
         } else {
             categoriesArray.push({

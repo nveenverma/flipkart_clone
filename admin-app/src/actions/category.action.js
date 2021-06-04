@@ -1,6 +1,7 @@
 import axios from "../helpers/axios"
 import { categoryConstants } from "./constants"
 
+// Action to get all the categories
 export const getAllCategory = () => {
     return async dispatch => {
 
@@ -27,6 +28,7 @@ export const getAllCategory = () => {
     }
 }
 
+// Action to add a category
 export const addCategory = (form) => {
     return async dispatch => {
         dispatch({ type : categoryConstants.ADD_NEW_CATEGORY_REQUEST })
@@ -44,5 +46,19 @@ export const addCategory = (form) => {
             })
         }
         console.log(res);
+    }
+}
+
+// Action to update categories
+export const updateCategories = (form) => {
+    return async dispatch => {
+        // dispatch({ type : categoryConstants.ADD_NEW_CATEGORY_REQUEST })
+        const res = await axios.post('category/update', form);
+
+        if (res.status === 201) {
+            return true;
+        } else  {
+            console.log(res)
+        }
     }
 }
