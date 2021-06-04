@@ -1,5 +1,6 @@
 const Category = require("../models/category");
 const slugify = require("slugify");
+const shortid = require("shortid");
 
 // Following is a recursive function to cover all the categories along with their sub-categories
 const createCategories = (categories, parentId = null) => {
@@ -29,7 +30,7 @@ const createCategories = (categories, parentId = null) => {
 exports.addCategory = (req, res) => {
 	const categoryObj = {
 		name: req.body.name,
-		slug: slugify(req.body.name),
+		slug: `${slugify(req.body.name)}-${shortid.generate()}`,
 	};
 
 	if (req.file) {
@@ -106,3 +107,21 @@ exports.updateCategories = async (req, res) => {
 		return res.status(201).json({ updatedCategory });
 	}
 };
+
+// Function to delete categories
+exports.deleteCategories = async (req, res) => {
+
+	const { ids } = req.body.payload;
+	const deletedCategories = [];
+
+	for (let i=0; i<ids.length; i++) {
+		const deletedCategory = await Category.findOneAndDelete({ _id : ids[i]._id })
+		deletedCategories.push(deletedCategory);
+	}
+
+	if (deletedCategories.length === ids.length) {
+		res.status(201).json({ message : "Categories removed" })
+	} else {
+		res.status(400).json({ message : 'Something went wrong' })
+	}
+}

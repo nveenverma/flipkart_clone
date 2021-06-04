@@ -3,13 +3,17 @@ import { Button, Col, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import CheckboxTree from "react-checkbox-tree";
 
-import { addCategory, getAllCategory, updateCategories } from "../../actions";
+import { 
+	addCategory, 
+	getAllCategory, 
+	updateCategories, 
+	deleteCategoriesAction 
+} from "../../actions";
 import Layout from "../../components/Layout";
 import Input from "../../components/UI/Input";
 import Modal from "../../components/UI/Modal";
 
 import "./style.css";
-
 import {
 	MdCheckBoxOutlineBlank,
 	MdIndeterminateCheckBox,
@@ -17,7 +21,6 @@ import {
 	MdKeyboardArrowRight,
 	MdKeyboardArrowDown,
 } from "react-icons/md";
-
 import "react-checkbox-tree/lib/react-checkbox-tree.css";
 
 function Categories() {
@@ -26,35 +29,19 @@ function Categories() {
 	const [parentCategoryId, setParentCategoryId] = useState("");
 	const [categoryImage, setCategoryImage] = useState("");
 
+	const [showUpdateCategoryModal, setShowUpdateCategoryModal] = useState(false);
 	const [checked, setChecked] = useState([]);
 	const [expanded, setExpanded] = useState([]);
 	const [checkedArray, setCheckedArray] = useState([]);
 	const [expandedArray, setExpandedArray] = useState([]);
 
-	const [showCategoryModal, setShowCategoryModal] = useState(false);
+	const [showDeleteCategoryModal, setShowDeleteCategoryModal] = useState(false);
 
 	const category = useSelector((state) => state.category);
 	const dispatch = useDispatch();
 
-	const handleClose = () => {
-		const form = new FormData();
-		const cat = {
-			categoryName,
-			parentCategoryId,
-			categoryImage,
-		};
-
-		form.append("name", categoryName);
-		form.append("parentId", parentCategoryId);
-		form.append("categoryImage", categoryImage);
-		dispatch(addCategory(form));
-
-		console.log(cat);
-		setShow(false);
-	};
-	const handleShow = () => setShow(true);
-
-	// Function to add categories into an array in a nested format based on their parent category
+	// Common Functions //
+	// Function to add all of the categories into an array in a nested format based on their parent category
 	const renderCategories = (categories) => {
 		let categoriesArray = [];
 
@@ -71,7 +58,7 @@ function Categories() {
 		return categoriesArray;
 	};
 
-	// Function to add all of the categories into an array
+	// Function to add all of the categories into an array in a linear format
 	const createCategoryList = (categories, options = []) => {
 		for (let category of categories) {
 			options.push({
@@ -86,9 +73,9 @@ function Categories() {
 		return options;
 	};
 
-	// Function to edit categories
-	const updateCategory = () => {
-		setShowCategoryModal(true);
+	// Function to add categories into checked or expanded arrays
+	const addToCheckedOrExpanded = () => {
+		
 		const categories = createCategoryList(category.categories);
 		const checkedArray = [];
 		const expandedArray = [];
@@ -110,52 +97,26 @@ function Categories() {
 				catObject && expandedArray.push(catObject);
 			});
 		setExpandedArray(expandedArray);
-
-		console.log({
-			checked,
-			expanded,
-			checkedArray,
-			expandedArray,
-			categories,
-		});
 	};
 
-	const handleCategoryInput = (key, value, index, type) => {
-		if (type === "checked") {
-			const updatedCheckedArray = checkedArray.map((item, _index) =>
-				_index === index ? { ...item, [key]: value } : item
-			);
-			setCheckedArray(updatedCheckedArray);
-		} else if (type === "expanded") {
-			const updatedExpandedArray = expandedArray.map((item, _index) =>
-				_index === index ? { ...item, [key]: value } : item
-			);
-			setExpandedArray(updatedExpandedArray);
-		}
-	};
 
-	const updateCategoriesForm = () => {
+	// Add Category Modal and helper Functions //
+	// Runs when submitting Add Category Form
+	const addCategoriesForm = () => {
 		const form = new FormData();
-		expandedArray.forEach((item, index) => {
-			form.append("_id", item.value);
-			form.append("name", item.name);
-			form.append("type", item.type);
-			form.append("parentId", item.parentId ? item.parentId : "");
-		});
+		const cat = {
+			categoryName,
+			parentCategoryId,
+			categoryImage,
+		};
 
-		checkedArray.forEach((item, index) => {
-			form.append("_id", item.value);
-			form.append("name", item.name);
-			form.append("type", item.type);
-			form.append("parentId", item.parentId ? item.parentId : "");
-		});
+		form.append("name", categoryName);
+		form.append("parentId", parentCategoryId);
+		form.append("categoryImage", categoryImage);
+		dispatch(addCategory(form));
 
-		dispatch(updateCategories(form)).then((result) => {
-			if (result) {
-				dispatch(getAllCategory());
-			}
-		});
-		setShowCategoryModal(false);
+		console.log(cat);
+		setShow(false);
 	};
 
 	// Displays modal for adding categories
@@ -164,7 +125,7 @@ function Categories() {
 			<Modal
 				show={show}
 				handleClose={() => setShow(false)}
-				onSubmit={handleClose}
+				onSubmit={addCategoriesForm}
 				modalTitle={"Add New Category"}
 				footer={"Save Changes"}
 			>
@@ -197,12 +158,59 @@ function Categories() {
 		);
 	};
 
-	// Displays modal for editing the categories
+	// Update Category Modal and helper Functions //
+	// Runs on clicking the Edit Button
+	const updateCategory = () => {
+		setShowUpdateCategoryModal(true);
+		addToCheckedOrExpanded();
+	}
+
+	// Function to change the state based on changes done in the update Category Form
+	const handleCategoryInput = (key, value, index, type) => {
+		if (type === "checked") {
+			const updatedCheckedArray = checkedArray.map((item, _index) =>
+				_index === index ? { ...item, [key]: value } : item
+			);
+			setCheckedArray(updatedCheckedArray);
+		} else if (type === "expanded") {
+			const updatedExpandedArray = expandedArray.map((item, _index) =>
+				_index === index ? { ...item, [key]: value } : item
+			);
+			setExpandedArray(updatedExpandedArray);
+		}
+	};
+
+	// Runs when submitting Update Categories Form
+	const updateCategoriesForm = () => {
+		const form = new FormData();
+		expandedArray.forEach((item) => {
+			form.append("_id", item.value);
+			form.append("name", item.name);
+			form.append("type", item.type);
+			form.append("parentId", item.parentId ? item.parentId : "");
+		});
+
+		checkedArray.forEach((item) => {
+			form.append("_id", item.value);
+			form.append("name", item.name);
+			form.append("type", item.type);
+			form.append("parentId", item.parentId ? item.parentId : "");
+		});
+
+		dispatch(updateCategories(form)).then((result) => {
+			if (result) {
+				dispatch(getAllCategory());
+			}
+		});
+		setShowUpdateCategoryModal(false);
+	};
+
+	// Displays modal for updating the categories
 	const renderUpdateCategoriesModal = () => {
 		return (
 			<Modal
-				show={showCategoryModal}
-				handleClose={() => setShowCategoryModal(false)}
+				show={showUpdateCategoryModal}
+				handleClose={() => setShowUpdateCategoryModal(false)}
 				onSubmit={updateCategoriesForm}
 				modalTitle={"Update Categories"}
 				size="lg"
@@ -336,7 +344,66 @@ function Categories() {
 		);
 	};
 
-	// JSX to be displayed on the page
+	// Update Category Modal and helper Functions //
+	// Runs on clicking the Delete Button
+	const deleteCategory = () => {
+		addToCheckedOrExpanded();
+		setShowDeleteCategoryModal(true);
+	}
+
+	const confirmDeleteCategories = () => {
+		const checkedIdsArray = checkedArray.map(item => ({_id : item.value}));
+		const expandedIdsArray = expandedArray.map(item => ({_id : item.value}))		
+		const idsArray = checkedIdsArray.concat(expandedIdsArray);
+
+		dispatch(deleteCategoriesAction(idsArray)).then((result) => {
+			if (result) {
+				dispatch(getAllCategory());
+				setShowDeleteCategoryModal(false);
+			}
+		});
+		// console.log(idsArray);
+	}
+
+	// Displays modal for updating the categories
+	const renderDeleteCategoryModal = () => {
+		return (
+			<Modal
+				show={showDeleteCategoryModal}
+				modalTitle={"Confirm"}
+				handleClose={() => setShowDeleteCategoryModal(false)}	
+				buttons={[
+					{
+						label : "No",
+						color : "primary",
+						onClick : () => {setShowDeleteCategoryModal(false)}
+					},
+					{
+						label : "Yes",
+						color : "danger",
+						onClick : confirmDeleteCategories
+					}
+				]}			
+			>
+				<Row>
+					<Col>
+						<h6>Expanded Categories</h6>
+					</Col>
+				</Row>
+				{ expandedArray.map( (item, index) => <span key={index}>{item.name}</span>)}
+
+				<Row className='marginTop'>
+					<Col>
+						<h6>Checked Categories</h6>
+					</Col>
+				</Row>
+				{ checkedArray.map( (item, index) => <span key={index}>{item.name}</span>)}
+
+			</Modal>
+		)
+	}
+
+	// Main JSX //	
 	return (
 		<Layout sidebar>
 			<Row className="marginBottom">
@@ -348,7 +415,10 @@ function Categories() {
 						}}
 					>
 						<h3>Category</h3>
-						<Button variant="outline-primary" onClick={handleShow}>
+						<Button
+							variant="outline-primary"
+							onClick={() => setShow(true)}
+						>
 							Add
 						</Button>
 					</div>
@@ -381,14 +451,20 @@ function Categories() {
 						onClick={updateCategory}
 						className="marginRight"
 					>
-						Edit
+						Update
 					</Button>
-					<Button variant="outline-danger">Delete</Button>
+					<Button 
+						variant="outline-danger"
+						onClick={deleteCategory}
+					>
+						Delete
+					</Button>
 				</Col>
 			</Row>
 
 			{renderAddCategoryModal()}
 			{renderUpdateCategoriesModal()}
+			{renderDeleteCategoryModal()}
 		</Layout>
 	);
 }
