@@ -7,7 +7,7 @@ import Home from "./containers/Home";
 import Signin from "./containers/Signin";
 import Signup from "./containers/Signup";
 import PrivateRoute from "./components/HOC/PrivateRoute"
-import { getAllCategory, getInitialData , isUserLoggedIn } from "./actions"
+import { getInitialData , isUserLoggedIn } from "./actions"
 import Products from "./containers/Products";
 import Orders from "./containers/Orders";
 import Categories from "./containers/Categories";

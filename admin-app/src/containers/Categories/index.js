@@ -362,7 +362,6 @@ function Categories() {
 				setShowDeleteCategoryModal(false);
 			}
 		});
-		// console.log(idsArray);
 	}
 
 	// Displays modal for updating the categories
