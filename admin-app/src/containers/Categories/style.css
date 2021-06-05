@@ -7,5 +7,29 @@
 }
 
 .marginRight {
+    margin-right: 5px;
+}
+
+.actionBtnsDiv {
+    display: flex;
+    justify-content: space-between;
+}
+
+.actionBtnsDiv > Button:not(:last-child) {
     margin-right: 20px;
+}
+
+.modal-header {
+    padding: 5px 15px;
+    background-color: #ddd;
+    border-bottom: solid 1px #aaa;
+}
+
+.modal-footer {
+    padding: 5px 15px;
+}
+
+.modal-title, .close {
+    font-size: 18px;
+    /* color: #000; */
 }

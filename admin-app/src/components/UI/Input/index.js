@@ -11,6 +11,7 @@ function Input(props) {
                 placeholder={props.placeholder} 
                 value={props.value}
                 onChange={props.handleChange}
+                {...props}
             />
             <Form.Text className="text-muted">
                 {props.errorMessage}

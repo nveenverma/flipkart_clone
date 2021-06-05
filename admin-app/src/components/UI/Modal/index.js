@@ -24,7 +24,12 @@ function CustomModal(props) {
                             {btn.label}
                         </Button>
                     ) : 
-                    <Button variant="primary" onClick={props.onSubmit}>
+                    <Button 
+                        variant="dark"
+                        className="btn-sm" 
+                        {...props}
+                        onClick={props.onSubmit}
+                    >
                         Save Changes
                     </Button>
                 }
