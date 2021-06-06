@@ -13,7 +13,7 @@ import {
 	MdAdd,
 	MdEdit,
 	MdDelete,
-	MdInsertDriveFile
+	MdInsertDriveFile,
 } from "react-icons/md";
 
 import {
@@ -74,6 +74,7 @@ function Categories() {
 				value: category._id,
 				name: category.name,
 				parentId: category.parentId,
+				type: category.type
 			});
 			if (category.children.length > 0) {
 				createCategoryList(category.children, options);
@@ -82,6 +83,8 @@ function Categories() {
 		return options;
 	};
 
+	const categoriesList = createCategoryList(category.categories);
+	
 	// Function to add categories into checked or expanded arrays
 	const addToCheckedOrExpanded = () => {
 		const categories = createCategoryList(category.categories);
@@ -106,8 +109,6 @@ function Categories() {
 			});
 		setExpandedArray(expandedArray);
 	};
-
-	const categoriesList = createCategoryList(category.categories);
 
 	// Add Category helper Functions //
 	// Runs when hiding Add Category Modal
@@ -135,8 +136,6 @@ function Categories() {
 		setCategoryImage("");
 		setCategoryName("");
 		setParentCategoryId("");
-
-		console.log(cat);
 		hideAddCategoryModal();
 	};
 
@@ -179,11 +178,7 @@ function Categories() {
 			form.append("parentId", item.parentId ? item.parentId : "");
 		});
 
-		dispatch(updateCategories(form)).then((result) => {
-			if (result) {
-				dispatch(getAllCategory());
-			}
-		});
+		dispatch(updateCategories(form));
 		setShowUpdateCategoryModal(false);
 	};
 
@@ -194,27 +189,24 @@ function Categories() {
 		setShowDeleteCategoryModal(true);
 	};
 
+	// .map((item) => ({
+	// 	_id: item.value
+	// }));
+
 	// Runs when user confirms that they want to delete the  selected categories
 	const confirmDeleteCategories = () => {
 		const checkedIdsArray = checkedArray.map((item) => ({
 			_id: item.value,
 		}));
-		// const expandedIdsArray = expandedArray.map(item => ({_id : item.value}))
-		// const idsArray = checkedIdsArray.concat(expandedIdsArray);
 
 		if (checkedIdsArray.length > 0) {
-			dispatch(deleteCategoriesAction(checkedIdsArray)).then((result) => {
-				if (result) {
-					dispatch(getAllCategory());
-					setShowDeleteCategoryModal(false);
-				}
-			});
+			dispatch(deleteCategoriesAction(checkedIdsArray));
 		}
+		setShowDeleteCategoryModal(false);
 	};
 
-	// Main JSX //
-	return (
-		<Layout sidebar>
+	const categoriesHeader = () => {
+		return (
 			<Row className="marginBottom">
 				<Col md={12}>
 					<div
@@ -252,7 +244,13 @@ function Categories() {
 					</div>
 				</Col>
 			</Row>
+		);
+	};
 
+	// Main JSX //
+	return (
+		<Layout sidebar>
+			{categoriesHeader()}
 			<Row className="marginBottom">
 				<Col md={12}>
 					<CheckboxTree
@@ -268,15 +266,11 @@ function Categories() {
 							expandClose: <MdKeyboardArrowRight />,
 							expandOpen: <MdKeyboardArrowDown />,
 							parentClose: <MdFolder />,
-        					parentOpen: <MdFolderOpen />,
-							leaf: <MdInsertDriveFile />
+							parentOpen: <MdFolderOpen />,
+							leaf: <MdInsertDriveFile />,
 						}}
 					/>
 				</Col>
-			</Row>
-
-			<Row className="marginBottom">
-				<Col></Col>
 			</Row>
 
 			{/* Displays modal for adding categories */}

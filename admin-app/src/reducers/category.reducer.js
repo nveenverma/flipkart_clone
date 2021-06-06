@@ -15,6 +15,7 @@ const buildNewCategories = (parentId, categories, category) => {
                 _id : category._id,
                 name : category.name,
                 slug : category.slug,
+                type: category.type,
                 children : []
             }
         ];
@@ -29,6 +30,7 @@ const buildNewCategories = (parentId, categories, category) => {
                 _id : category._id,
                 name : category.name,
                 slug : category.slug,
+                type: category.type,
                 parentId : category.parentId,
                 children : []
             }
@@ -53,6 +55,7 @@ const categoryReducer =  (state = initState, action) => {
     switch (action.type) {
     
         // Changing the state based on actions dispatched while getting the categories list
+        // Getting Categories
         case categoryConstants.GET_ALL_CATEGORIES_REQUEST : 
             break;
         
@@ -71,7 +74,7 @@ const categoryReducer =  (state = initState, action) => {
             }
             break;
         
-        // Changing the state based on actions dispatched while adding a new category
+        // Adding Categories
         case categoryConstants.ADD_NEW_CATEGORY_REQUEST : 
             state = {
                 ...state,
@@ -86,8 +89,8 @@ const categoryReducer =  (state = initState, action) => {
 
             state = {
                 ...state,
-                categories : updatedCategories,
-                loading : false
+                loading : false,
+                categories : updatedCategories
             }
             break;
         case categoryConstants.ADD_NEW_CATEGORY_FAILURE : 
@@ -98,6 +101,52 @@ const categoryReducer =  (state = initState, action) => {
             }
             break;
 
+        // Updating Categories
+        case categoryConstants.UPDATE_CATEGORIES_REQUEST : 
+            state = {
+                ...state,
+                loading : true
+            }
+            break;
+
+        case categoryConstants.UPDATE_CATEGORIES_SUCCESS :
+            state = {
+                ...state,
+                loading : false
+            }
+            break;
+
+        case categoryConstants.UPDATE_CATEGORIES_FAILURE : 
+            state = {
+                ...state,
+                loading : false,
+                error : action.payload.error
+            }
+            break;
+
+        // Deleting Categories
+        case categoryConstants.DELETE_CATEGORIES_REQUEST : 
+            state = {
+                ...state,
+                loading : true
+            }
+            break;
+
+        case categoryConstants.DELETE_CATEGORIES_SUCCESS :
+            state = {
+                ...state,
+                loading : false
+            }
+            break;
+
+        case categoryConstants.DELETE_CATEGORIES_FAILURE : 
+            state = {
+                ...state,
+                loading : false,
+                error : action.payload.error
+            }
+            break;
+            
         // State for default action type
         default : 
             state = {
