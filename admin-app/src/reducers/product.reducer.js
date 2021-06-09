@@ -15,7 +15,7 @@ const productReducer = (state=initState, action) => {
                 products : action.payload.products
             }
             break;
-            
+
         default :
             state = {
                 ...state

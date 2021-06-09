@@ -16,6 +16,7 @@ const AddCategoryModel = (props) => {
 		setParentCategoryId,
 		setCategoryImage,
 		categoriesList,
+		...rest
 	} = props;
 
 	return (

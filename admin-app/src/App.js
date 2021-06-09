@@ -11,6 +11,7 @@ import { getInitialData , isUserLoggedIn } from "./actions"
 import Products from "./containers/Products";
 import Orders from "./containers/Orders";
 import Categories from "./containers/Categories";
+import NewPage from "./containers/NewPage";
 
 function App() {
 
@@ -23,15 +24,18 @@ function App() {
     if (!auth.authenticate) {
         dispatch(isUserLoggedIn());
     }
-    dispatch(getInitialData());
+    if (auth.authenticate) {
+      dispatch(getInitialData());
+    }
     // dispatch(getAllCategory())
 
-  }, []);
+  }, [auth.authenticate]);
 
   return (
     <div className="App">
         <Switch>
           <PrivateRoute path='/' exact component={Home} />
+          <PrivateRoute path='/page' component={NewPage} />
           <PrivateRoute path='/products' component={Products} />
           <PrivateRoute path='/orders' component={Orders} />
           <PrivateRoute path='/categories' component={Categories} />
