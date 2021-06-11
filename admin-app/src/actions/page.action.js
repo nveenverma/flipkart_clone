@@ -9,7 +9,7 @@ export const createPage = (form) => {
             console.log(res)
             if (res.status === 201) {
                 dispatch({ 
-                    type : pageConstants.CREATE_PAGE_REQUEST,
+                    type : pageConstants.CREATE_PAGE_SUCCESS,
                     payload : { page : res.data.page }
                 })                
             } else {

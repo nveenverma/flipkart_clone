@@ -27,7 +27,6 @@ function App() {
     if (auth.authenticate) {
       dispatch(getInitialData());
     }
-    // dispatch(getAllCategory())
 
   }, [auth.authenticate]);
 

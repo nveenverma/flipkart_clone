@@ -12,6 +12,8 @@ import { createPage } from "../../actions"
 const NewPage = () => {
 
     const category = useSelector(state => state.category)
+    const page = useSelector(state => state.page)
+    
     const dispatch = useDispatch()
 
     const [showModal, setShowModal] = useState(false)
@@ -23,13 +25,26 @@ const NewPage = () => {
     const [categories, setCategories] = useState([])
     const [banners, setBanners] = useState([])
     const [products, setProducts] = useState([])
-
+    
     useEffect(() => {
         setCategories(linearCategories(category.categories));
-    }, [category])
+    }, [category]) 
+
+    useEffect(() => {
+        
+        if (!page.loading) {
+            setTitle("")
+            setCategoryId("")
+            setDesc("")
+            setType("")
+            setBanners([])
+            setProducts([])
+        }
+    }, [page])
+
 
     const onCategoryChange = (e) => {
-        const selectedCategory = categories.find(cat => cat.value == e.target.value);
+        const selectedCategory = categories.find(cat => cat.value === e.target.value);
         
         setCategoryId(e.target.value);
         setType(selectedCategory.type);
@@ -162,19 +177,6 @@ const NewPage = () => {
                         </Input>
                     </Col>
                 </Row>
-
-                {/* <Row>
-                    <Col>
-                        <Input
-                            className="form-control form-control-sm"
-                            value={title}
-                            handleChange={(e) => setTitle(e.target.value)}
-                            placeholder={'Page Title'}
-                        >
-                        </Input>
-                    </Col>
-                </Row> */}
-
             </Modal>
         )
     }
