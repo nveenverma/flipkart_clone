@@ -24,7 +24,7 @@ function App() {
     if (!auth.authenticate) {
         dispatch(isUserLoggedIn());
     }
-    if (auth.authenticate) {
+    else {
       dispatch(getInitialData());
     }
 

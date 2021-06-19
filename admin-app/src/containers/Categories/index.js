@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Col, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import CheckboxTree from "react-checkbox-tree";
@@ -48,6 +48,12 @@ function Categories() {
 
 	const category = useSelector((state) => state.category);
 	const dispatch = useDispatch();
+
+	useEffect(() => {
+		if (!category.loading) {
+			setShow(false)
+		}
+	}, [category.loading])
 
 	// Common Functions //
 	// Function to add all of the categories into an array in a nested format based on their parent category
@@ -122,6 +128,13 @@ function Categories() {
 	// Runs when submitting Add Category Form
 	const addCategoriesForm = () => {
 		const form = new FormData();
+
+		if (categoryName === "") {
+			setShow(false)
+			alert("Category Name Required")
+			return;
+		}
+
 		const cat = {
 			categoryName,
 			parentCategoryId,
@@ -189,9 +202,7 @@ function Categories() {
 		setShowDeleteCategoryModal(true);
 	};
 
-	// .map((item) => ({
-	// 	_id: item.value
-	// }));
+
 
 	// Runs when user confirms that they want to delete the  selected categories
 	const confirmDeleteCategories = () => {

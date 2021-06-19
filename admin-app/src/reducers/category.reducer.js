@@ -57,20 +57,25 @@ const categoryReducer =  (state = initState, action) => {
         // Changing the state based on actions dispatched while getting the categories list
         // Getting Categories
         case categoryConstants.GET_ALL_CATEGORIES_REQUEST : 
+            state = {
+                ...state,
+                loading : true
+            }
             break;
         
         case categoryConstants.GET_ALL_CATEGORIES_SUCCESS : 
             state = {
                 ...state,
                 categories : action.payload.categories,
-                loading : true
+                loading : false
             }
             break;
-
-        case categoryConstants.GET_ALL_CATEGORIES_FAILURE : 
+            
+            case categoryConstants.GET_ALL_CATEGORIES_FAILURE : 
             state = {
                 ...initState,
-                error : action.payload.error
+                error : action.payload.error,
+                loading : false
             }
             break;
         
@@ -101,6 +106,7 @@ const categoryReducer =  (state = initState, action) => {
             }
             break;
 
+            
         // Updating Categories
         case categoryConstants.UPDATE_CATEGORIES_REQUEST : 
             state = {

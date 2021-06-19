@@ -10,18 +10,19 @@ import { createPage } from "../../actions"
 
 
 const NewPage = () => {
-
+    
+    
     const category = useSelector(state => state.category)
     const page = useSelector(state => state.page)
     
     const dispatch = useDispatch()
-
+    
     const [showModal, setShowModal] = useState(false)
     const [title, setTitle] = useState('')
     const [categoryId, setCategoryId] = useState('')
     const [desc, setDesc] = useState('')
     const [type, setType] = useState('')
-
+    
     const [categories, setCategories] = useState([])
     const [banners, setBanners] = useState([])
     const [products, setProducts] = useState([])
@@ -29,9 +30,8 @@ const NewPage = () => {
     useEffect(() => {
         setCategories(linearCategories(category.categories));
     }, [category]) 
-
-    useEffect(() => {
-        
+    
+    useEffect(() => {        
         if (!page.loading) {
             setTitle("")
             setCategoryId("")
@@ -41,20 +41,21 @@ const NewPage = () => {
             setProducts([])
         }
     }, [page])
-
-
+    
     const onCategoryChange = (e) => {
         const selectedCategory = categories.find(cat => cat.value === e.target.value);
         
         setCategoryId(e.target.value);
         setType(selectedCategory.type);
     }
-
+    
     const handleBannerImages = (e) => {
+        console.log("Banner Image : ", e);
         setBanners([...banners, e.target.files[0]])
     }
-    
+        
     const handleProductImages = (e) => {
+        console.log("Product Image : ", e);
         setProducts([...products, e.target.files[0]])
     }
 
@@ -79,13 +80,13 @@ const NewPage = () => {
         products.forEach(product=> {
             form.append('products', product);
         })
-
-        console.log({ title, desc, category, type, banners, products })
+        
+        console.log("form data : ", { title, desc, category, type, banners, products })
         
         dispatch(createPage(form))
         setShowModal(false)
     }
-
+    
     const renderCreatePageModal = () => {
 
         return (
@@ -98,19 +99,13 @@ const NewPage = () => {
 
                 <Row>
                     <Col>
-                        <select
-                            className="form-control form-control-sm"
+                        <Input 
                             value={categoryId}
-                            onChange={onCategoryChange}
-                            style={{marginBottom : "20px"}}
-                        >
-                            <option value={''} >select category</option>
-                            {
-                                categories.map(
-                                    cat => <option key={cat.value} value={cat.value}>{cat.name}</option>
-                                )
-                            }
-                        </select>
+                            handleChange={onCategoryChange}
+                            placeholder={"select category"}
+                            options={categories}
+                            type={'select'}
+                        />
                     </Col>
                 </Row>
 

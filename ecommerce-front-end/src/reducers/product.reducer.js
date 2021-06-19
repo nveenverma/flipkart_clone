@@ -9,7 +9,10 @@ const initState = {
         under20K : [],
         under30K : [],
         above30K : []
-    }
+    },
+    pageRequest : false,
+    page : {},
+    error : null
 }
 
 const allProductsReducer = (state = initState, action) => {
@@ -24,6 +27,26 @@ const allProductsReducer = (state = initState, action) => {
                 }
             }
             break;
+        case productConstants.GET_PRODUCT_PAGE_REQUEST:
+            state = {
+                ...state,
+                pageRequest : true
+            }
+            break;
+        case productConstants.GET_PRODUCT_PAGE_SUCCESS:
+        state = {
+            ...state,
+            page : action.payload.page,
+            pageRequest : false
+        }
+        break;
+        case productConstants.GET_PRODUCT_PAGE_FAILURE:
+        state = {
+            ...state,
+            error : action.payload.error,
+            pageRequest : false            
+        }
+        break;
         default :  {
             state = {
                 ...state

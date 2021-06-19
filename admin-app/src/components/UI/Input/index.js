@@ -2,33 +2,33 @@ import React from "react";
 import { Form } from "react-bootstrap";
 
 function Input(props) {
-	const {
-		label,
-		type,
-		placeholder,
-		value,
-		handleChange,
-		errorMessage,
-        options,
-		...rest
-	} = props;
+	// const {
+	// 	label,
+	// 	type,
+	// 	placeholder,
+	// 	value,
+	// 	handleChange,
+	// 	errorMessage,
+    //     options,
+	// 	...rest
+	// } = props;
 
 	let input = null;
 
-	switch (type) {
+	switch (props.type) {
 		case "select":
 			input = (
 				<Form.Group>
-					{label && <Form.Label>{label}</Form.Label>}
+					{props.label && <Form.Label>{props.label}</Form.Label>}
                     <select
                         className='form-control form-control-sm'
-                        value={value}
-                        onChange={handleChange}
+                        value={props.value}
+                        onChange={props.handleChange}
                     >
-                        <option value=''>{placeholder}</option>
+                        <option value=''>{props.placeholder}</option>
                         {
-                            options.length > 0 ?
-                            options.map((option, index) => 
+                            props.options.length > 0 ?
+                            props.options.map((option, index) => 
                             <option key={index} value={option.value}>{option.name}</option>
                             ) : 
                             <option value="">No Option</option>
@@ -42,15 +42,17 @@ function Input(props) {
 		default:
 			input = (
 				<Form.Group>
-					{label && <Form.Label>{label}</Form.Label>}
+					{props.label && <Form.Label>{props.label}</Form.Label>}
 					<Form.Control
-						type={type}
-						placeholder={placeholder}
-						value={value}
-						onChange={handleChange}
-						{...rest}
+						type={props.type}
+						placeholder={props.placeholder}
+						value={props.value}
+						onChange={props.handleChange}
+						{...props}
 					/>
-					<Form.Text className="text-muted">{errorMessage}</Form.Text>
+					<Form.Text className="text-muted">
+						{props.errorMessage}
+					</Form.Text>
 				</Form.Group>
 			);
 	}

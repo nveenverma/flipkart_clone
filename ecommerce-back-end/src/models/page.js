@@ -26,6 +26,7 @@ const pageSchema = new mongoose.Schema(
 		],
         category : {
             type : mongoose.Schema.Types.ObjectId,
+			unique : true,
             ref: 'Category',
             required : true
         },
