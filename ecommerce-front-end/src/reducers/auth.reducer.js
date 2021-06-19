@@ -19,7 +19,7 @@ const initialState = {
 // Reducer which updates central store based on the action type dispatched
 const authReducer = (state = initialState, action) => {
 
-    console.log(action);
+    // console.log(action);
     
     switch (action.type) {
 

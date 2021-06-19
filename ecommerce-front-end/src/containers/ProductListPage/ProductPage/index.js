@@ -57,7 +57,7 @@ const ProductPage = (props) => {
                     justifyContent: 'center',
                     flexWrap: 'wrap',
                     margin: '10px 0',
-                    marginTop: '20px'
+                    marginTop: '10px'
                 }}
             >
                 {
@@ -66,15 +66,13 @@ const ProductPage = (props) => {
                             key={idx}
                             style={{
                                 width: '400px',
-                                height: '200px',
                                 margin: '5px'
                             }}
                         >
                             <img  
                                 style={{
                                     display: 'block',
-                                    marginLeft: 'auto',
-                                    marginRight: 'auto',
+                                    margin : '10px auto',
                                     width: '50%',
                                 }}
                                 src={item.img} 

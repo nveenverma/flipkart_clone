@@ -23,12 +23,12 @@ export const getProductsBySlug = (slug) => {
 export const getProductPage = (payload) => {
     return async dispatch => {
 
+        dispatch({ type : productConstants.GET_PRODUCT_PAGE_REQUEST })
+
         try {
             const { cid, type } = payload.params;
             const res = await axios.get(`/page/${cid}/${type}`);
-            
-            dispatch({ type : productConstants.GET_PRODUCT_PAGE_REQUEST })
-            
+                
             if (res.status === 200) {
                 const { page } = res.data;
                 dispatch({
@@ -44,6 +44,32 @@ export const getProductPage = (payload) => {
             }
         } catch (error) {
             console.log(error)
+        }
+    }
+}
+
+// Action Creator for getting a single products' details
+export const getProductDetailsById = (payload) => {
+    return async dispatch => {
+
+        dispatch({ type : productConstants.GET_PRODUCT_DETAILS_BY_ID_REQUEST })
+        let res;
+
+        try {
+            const { productId } = payload.params;
+            res = await axios.get(`/product/${productId}`);
+            
+            console.log(res)
+            dispatch({
+                type : productConstants.GET_PRODUCT_DETAILS_BY_ID_SUCCESS,
+                payload : { productDetails : res.data.product } 
+            })
+        } catch (error) {
+            console.log(error);
+            dispatch({
+                type : productConstants.GET_PRODUCT_DETAILS_BY_ID_FAILURE,
+                payload : { error : res.data.error }
+            })
         }
     }
 }

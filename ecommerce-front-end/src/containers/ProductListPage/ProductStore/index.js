@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { Link } from "react-router-dom"
 
 import { getProductsBySlug } from '../../../actions';
 import { generatePublicUrl } from "../../../urlConfig"
@@ -36,7 +37,12 @@ const ProductStore = (props) => {
                             <div className="productParentContainer">
                                 {
                                     product.productsByPrice[key].map( item =>                                         
-                                        <div className="productContainer" key={item._id}>
+                                        <Link 
+                                            to={`/${item.slug}/${item._id}/p`}
+                                            style={{display: 'block'}}
+                                            className="productContainer" 
+                                            key={item._id}
+                                        >
                                             <div className="productImgContainer">                                                    
                                                 <img src={generatePublicUrl(item.productPictures[0].img)} alt="iPhone 12 Pro"/>
                                             </div>
@@ -49,7 +55,7 @@ const ProductStore = (props) => {
                                                 </div>
                                                 <div className='productPrice' >{item.price}</div>
                                             </div>
-                                        </div>
+                                        </Link>
                                     )   
                                 }
                             </div>

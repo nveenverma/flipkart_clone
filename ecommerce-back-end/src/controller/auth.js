@@ -53,7 +53,7 @@ exports.signin = (req, res) => {
     .exec((error, user) => {
         if (error) return res.status(400).json({ error });
         if (user) {
-            if (user.authenticate(req.body.password)) {
+            if (user.authenticate(req.body.password) && user.role === 'user') {
                 
                 // Generating JSON Web Token from the id returned
                 const token = jwt.sign({ _id : user._id, role : user.role }, process.env.JWT_TOKEN, { expiresIn : '1h' });
@@ -66,11 +66,11 @@ exports.signin = (req, res) => {
                 })
             } else {
                 return res.status(400).json({
-                    message : "Invalid Password"
+                    message : 'Something went wrong'
                 })
             }
         } else {
-            return res.status(400).json({ message : 'Something went wrong' });
+            return res.status(400).json({ message : 'Could not find this user' });
         }
     })
 }
