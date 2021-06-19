@@ -34,8 +34,6 @@ const ProductPage = (props) => {
                         <a
                             style={{
                                 display: 'block',
-                                maxWidth: '1600px',
-                                maxHeight: '400px',
                                 objectFit: 'cover'
 
                             }} 
@@ -74,15 +72,15 @@ const ProductPage = (props) => {
                         >
                             <img  
                                 style={{
-                                    // width: '100%',
-                                    // height: '100%'
-                                    textAlign: 'center'
+                                    display: 'block',
+                                    marginLeft: 'auto',
+                                    marginRight: 'auto',
+                                    width: '50%',
                                 }}
                                 src={item.img} 
                                 alt="" 
                             />
                         </Card>
-                        
                     )
                 }
             </div>
