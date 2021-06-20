@@ -67,21 +67,24 @@ export const signout = () => {
     return async dispatch => {
 
         dispatch({ type : authConstants.LOGOUT_REQUEST });
-        const res = await axios.post('/admin/signout');
+        localStorage.clear();
+        dispatch({ type : authConstants.LOGOUT_SUCCESS })
 
-        if ( res.status === 200 ) {
+        // const res = await axios.post('/admin/signout');
+
+        // if ( res.status === 200 ) {
           
-            localStorage.clear();
-            dispatch({ type : authConstants.LOGOUT_SUCCESS });
+        //     localStorage.clear();
+        //     dispatch({ type : authConstants.LOGOUT_SUCCESS });
             
-        } else {
+        // } else {
           
-            dispatch({ 
-                type : authConstants.LOGOUT_FAILURE,
-                payload : { error : res.data.error }
-            });
+        //     dispatch({ 
+        //         type : authConstants.LOGOUT_FAILURE,
+        //         payload : { error : res.data.error }
+        //     });
         
-        }
+        // }
 
     }
 }

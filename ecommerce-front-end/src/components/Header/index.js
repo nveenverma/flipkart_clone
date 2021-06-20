@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { IoIosArrowDown, IoIosCart, IoIosSearch } from 'react-icons/io';
 import { useDispatch, useSelector } from "react-redux"
-import { login } from "../../actions"
+import { login, signout } from "../../actions"
 
 import { 
     Modal,
@@ -34,8 +34,11 @@ const Header = (props) => {
   }, [auth.authenticate])
 
   const userLogin = () => {
-    console.log("Clicked")
     dispatch(login({ email, password }))
+  }
+
+  const userLogout = () => {
+    dispatch(signout())
   }
   
 
@@ -58,7 +61,7 @@ const Header = (props) => {
           { label: 'Rewards', href: '', icon: null },
           { label: 'Notifications', href: '', icon: null },
           { label: 'Gift Cards', href: '', icon: null },
-          { label: 'Logout', href: '', icon: null },
+          { label: 'Logout', href: '', icon: null, onClick : userLogout },
         ]}
       />
     )
