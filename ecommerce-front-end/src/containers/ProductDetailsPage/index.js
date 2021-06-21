@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getProductDetailsById } from "../../actions";
-import Layout from "../../components/Layout";
-
 import { IoIosArrowForward, IoIosStar, IoMdCart } from "react-icons/io";
 import { BiRupee } from "react-icons/bi";
 import { AiFillThunderbolt } from "react-icons/ai";
+
+import Layout from "../../components/Layout";
 import { MaterialButton } from "../../components/MaterialUI";
 import { generatePublicUrl } from "../../urlConfig";
+import { getProductDetailsById, addToCart } from "../../actions";
 import "./style.css";
 
 const ProductDetailsPage = (props) => {
@@ -19,11 +19,11 @@ const ProductDetailsPage = (props) => {
 		const payload = {
 			params: { productId },
 		};
-		dispatch(getProductDetailsById(payload));
 		console.log(
 			"ProductId when loading product details Page : ",
 			productId
 		);
+		dispatch(getProductDetailsById(payload));
 	}, []);
 
 	if (Object.keys(product.productDetails).length === 0) {
@@ -66,6 +66,12 @@ const ProductDetailsPage = (props) => {
 									marginRight: "5px",
 								}}
 								icon={<IoMdCart />}
+								onClick={() => {
+									const { _id, name, price } = product.productDetails;
+									const img = product.productDetails.productPictures[0].img;
+									dispatch(addToCart({ _id, name, price, img }));
+									props.history.push('/cart')
+								}}
 							/>
 							<MaterialButton
 								title="BUY NOW"

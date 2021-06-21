@@ -70,9 +70,9 @@ const MaterialInput = (props) => {
 };
 
 const MaterialButton = (props) => {
-	// const onClick = () => {
-	//     props.onClick && props.onClick();
-	// }
+	const onClick = () => {
+	    props.onClick && props.onClick();
+	}
 
 	return (
 		<div
@@ -87,7 +87,7 @@ const MaterialButton = (props) => {
 					color: props.textColor,
 				}}
 				className="materialButton"
-				onClick={props.onClick}
+				onClick={onClick}
 			>
 				{props.icon && props.icon}
 				{props.title && props.title}

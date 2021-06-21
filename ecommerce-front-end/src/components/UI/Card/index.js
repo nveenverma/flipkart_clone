@@ -7,6 +7,14 @@ const Card = (props) => {
             className='card'
             {...props}
         >
+            <div className='cardHeader'>
+                {
+                    props.headerLeft && <div>{props.headerLeft}</div>
+                }
+                {
+                    props.headerRight && <div>{props.headerRight}</div>
+                }
+            </div>
             {props.children}            
         </div>
     )
