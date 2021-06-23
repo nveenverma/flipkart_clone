@@ -13,14 +13,14 @@ const CartItem = (props) => {
 	const [qty, setQty] = useState(props.cartItem.qty);
 
 	const localIncrementFunction = () => {
-		setQty(qty + 1);
-        dispatch(addToCart({ _id, name, price, img }, 1));
+		setQty(qty + 1);        
+		props.onQuantityInc(_id, qty);
 	};
     
 	const localDecrementFunction = () => {
-        if (qty <= 1) return;
+		if (qty <= 1) return;
 		setQty(qty - 1);
-        dispatch(addToCart({ _id, name, price, img }, -1));
+		props.onQuantityDec(_id, qty);
 	};
 
 	return (

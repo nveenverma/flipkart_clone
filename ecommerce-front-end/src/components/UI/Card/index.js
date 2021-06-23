@@ -1,21 +1,21 @@
 import React from 'react'
 import './style.css'
 
-const Card = (props) => {
+const Card = ({headerLeft, headerRight, children, ...rest}) => {
     return (
         <div 
             className='card'
-            {...props}
+            {...rest}
         >
             <div className='cardHeader'>
                 {
-                    props.headerLeft && <div>{props.headerLeft}</div>
+                    headerLeft && <div>{headerLeft}</div>
                 }
                 {
-                    props.headerRight && <div>{props.headerRight}</div>
+                    headerRight && <div>{headerRight}</div>
                 }
             </div>
-            {props.children}            
+            {children}            
         </div>
     )
 }
