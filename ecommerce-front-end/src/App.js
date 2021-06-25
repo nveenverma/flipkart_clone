@@ -7,6 +7,7 @@ import Homepage from "./containers/Homepage";
 import ProductListPage from "./containers/ProductListPage";
 import ProductDetailsPage from "./containers/ProductDetailsPage";
 import CartPage from "./containers/CartPage";
+import CheckoutPage from "./containers/CheckoutPage";
 import './App.css';
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
       }
       dispatch(updateCart())
     }, [auth.authenticate])
+    
 
   return (
     <div className="App">
@@ -27,6 +29,7 @@ function App() {
         <Switch>
           <Route exact path='/' component={Homepage} />
           <Route path='/cart' component={CartPage} />
+          <Route path='/checkout' component={CheckoutPage} />
           <Route path='/:productSlug/:productId/p' component={ProductDetailsPage} />
           <Route path='/:slug' component={ProductListPage} />
         </Switch>
