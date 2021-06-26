@@ -28,6 +28,26 @@ const userReducer = (state = initState, action) => {
                 loading : false
             }
             break;
+        case userConstants.ADD_USER_ADDRESS_REQUEST:
+            state = {
+                ...state,
+                loading : true
+            }
+            break;
+        case userConstants.ADD_USER_ADDRESS_SUCCESS:
+            state = {
+                ...state,
+                address : action.payload.address,
+                loading : false
+            }
+            break;
+        case userConstants.ADD_USER_ADDRESS_FAILURE:
+            state = {
+                ...state,
+                error : action.payload.error,
+                loading : false
+            }
+            break;
         
         default:
             break;

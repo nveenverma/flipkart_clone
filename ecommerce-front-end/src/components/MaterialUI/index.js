@@ -31,43 +31,57 @@ const Modal = (props) => {
 };
 
 const MaterialInput = (props) => {
-	const [focus, setFocus] = useState(false);
-
+	const [focus, setFocus] = useState(props.value === "" ? false : true);
+	const [touch, setTouch] = useState(false);
+  
 	return (
-		<div className="materialInput">
-			<label
-				className={`label ${focus ? "focus" : ""}`}
-				style={{
-					top: 0,
-					lineHeight: "none",
-				}}
-			>
-				{props.label}
-			</label>
-			<div
-				style={{
-					display: "flex",
-				}}
-			>
-				<input
-					className="input"
-					type={props.type}
-					value={props.value}
-					onChange={props.onChange}
-					onFocus={(e) => {
-						setFocus(true);
-					}}
-					onBlur={(e) => {
-						if (e.target.value === "") {
-							setFocus(false);
-						}
-					}}
-				/>
-				{props.rightElement ? props.rightElement : null}
-			</div>
+	  <div className="materialInput">
+		<label
+		  className={`label ${focus ? "focus" : ""}`}
+		  style={{
+			top: 0,
+			lineHeight: "none",
+		  }}
+		>
+		  {props.label && `Enter ${props.label}`}
+		</label>
+		<div
+		  style={{
+			display: "flex",
+		  }}
+		>
+		  <input
+			className="input"
+			type={props.type}
+			value={props.value}
+			onChange={props.onChange}
+			onFocus={(e) => {
+			  setFocus(true);
+			  setTouch(true);
+			}}
+			onBlur={(e) => {
+			  if (e.target.value === "") {
+				setFocus(false);
+			  } else {
+				setTouch(false);
+			  }
+			}}
+		  />
+		  {props.rightElement ? props.rightElement : null}
 		</div>
+		{touch && (
+		  <div
+			style={{
+			  fontSize: "10px",
+			  color: "red",
+			  fontWeight: 500,
+			}}
+		  >{`${props.label} is Required`}</div>
+		)}
+	  </div>
 	);
-};
+  };
+  
 
 const MaterialButton = (props) => {
 	const onClick = () => {
@@ -124,4 +138,12 @@ const DropdownMenu = (props) => {
 	);
 };
 
-export { Modal, MaterialInput, MaterialButton, DropdownMenu };
+const Anchor = (props) => {
+	return (
+	  <button {...props} className="anchorButton">
+		{props.name}
+	  </button>
+	);
+};
+
+export { Modal, MaterialInput, MaterialButton, DropdownMenu, Anchor };

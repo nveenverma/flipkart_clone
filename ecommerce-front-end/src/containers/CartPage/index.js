@@ -5,6 +5,7 @@ import "./style.css"
 import Layout from '../../components/Layout'
 import Card from '../../components/UI/Card'
 import { MaterialButton } from "../../components/MaterialUI"
+import PriceDetails from "../../components/PriceDetails"
 import CartItem from "./CartItem"
 import { addToCart, getCartItems } from '../../actions'
 
@@ -37,13 +38,34 @@ const CartPage = (props) => {
         dispatch(addToCart({ _id, name, price, img }, -1));
     }
 
+    if (props.onlyCartItems) {
+        return (
+            <div style={{ padding : '10px 0' }}>
+                {
+                    Object.keys(cartItems).map((item, index) => 
+                        <CartItem
+                            key={index}
+                            cartItem={cartItems[item]}
+                            onQuantityInc={onQuantityIncrement}
+                            onQuantityDec={onQuantityDecrement}
+                        />
+                    )
+                }
+            
+            </div>
+        )
+    }
+
     return (
         <Layout>
             <div className='cartContainer' style={{ alignItems : 'flex-start' }}>
                 <Card
                     headerLeft={`My Cart`}
                     headerRight={<div>Deliver to</div>}
-                    style={{ width : 'calc(100%-40px)', overflow : 'hidden' }}
+                    style={{ 
+                        width : 'calc(100% - 400px)', 
+                        overflow : 'hidden',
+                    }}
                 >
                     {
                         Object.keys(cartItems).map((item, index) => 
@@ -61,7 +83,7 @@ const CartPage = (props) => {
                         background : 'fff',
                         justifyContent : 'flex-end',
                         boxShadow : '0 0 10px 10px #eee',
-                        padding : '10px 0',
+                        padding : '10px',
                         boxSizing : 'border-box'
                     }}>
                         <div style={{ width : '250px' }} >
@@ -72,13 +94,15 @@ const CartPage = (props) => {
                         </div>
                     </div>                    
                 </Card>
-                <Card
-                    headerLeft="Price"
-                    style={{
-                        width:'380px'
-                    }}
-                >                 
-                </Card>
+                <PriceDetails
+                    totalItem={Object.keys(cart.cartItems).reduce((totalQty, key) => {
+                        return totalQty + cart.cartItems[key].qty
+                    }, 0)}
+                    totalPrice={Object.keys(cart.cartItems).reduce((totalPrice, key) => {
+                        const {price, qty} = cart.cartItems[key];                        
+                        return totalPrice + (price*qty);
+                    }, 0)}
+                />
             </div>
         </Layout>
     )

@@ -33,7 +33,11 @@ export const addAddress = (payload) => {
             
             if (res.status === 201) {
                 console.log(res)
-                // dispatch({ type : userConstants.ADD_USER_ADDRESS_REQUEST });
+                const { address : { address }} = res.data;
+                dispatch({ 
+                    type : userConstants.ADD_USER_ADDRESS_SUCCESS,
+                    payload : { address }
+                });
             } else {
                 const { error } = res.data;
                 dispatch({ 

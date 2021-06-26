@@ -23,37 +23,48 @@ const getCartItems = () => {
     }
 }
 
-export const addToCart = (product, newQty=1) => {
-    return async dispatch => {
-        const { cart : { cartItems }, auth } = store.getState();
-        const qty = cartItems[product._id] ? parseInt(cartItems[product._id].qty + newQty) : 1;
-        cartItems[product._id] = { ...product, qty }
-
-        if (auth.authenticate) {
-            dispatch({ type : cartConstants.ADD_TO_CART_REQUEST })
-            const payload = {
-                cartItems : [{ 
-                    product : product._id, 
-                    quantity : qty 
-                }]
-            }
-            console.log(payload);
-            const res = await axios.post('/users/cart/addToCart', payload)
-            console.log(res);
-            if (res.status === 201) {
-                dispatch(getCartItems())
-            }
-        } else {
-            localStorage.setItem('cart', JSON.stringify(cartItems))
+export const addToCart = (product, newQty = 1) => {
+    return async (dispatch) => {
+      const {
+        cart: { cartItems },
+        auth,
+      } = store.getState();
+      const qty = cartItems[product._id]
+        ? parseInt(cartItems[product._id].qty + newQty)
+        : 1;
+      cartItems[product._id] = {
+        ...product,
+        qty,
+      };
+  
+      if (auth.authenticate) {
+        dispatch({ type: cartConstants.ADD_TO_CART_REQUEST });
+        const payload = {
+          cartItems: [
+            {
+              product: product._id,
+              quantity: qty,
+            },
+          ],
+        };
+        console.log(payload);
+        const res = await axios.post(`/user/cart/addtocart`, payload);
+        console.log(res);
+        if (res.status === 201) {
+          dispatch(getCartItems());
         }
-
-        console.log('addToCart::', cartItems)
-        dispatch({
-            type : cartConstants.ADD_TO_CART_SUCCESS,
-            payload : { cartItems }
-        })
-    }
-}
+      } else {
+        localStorage.setItem("cart", JSON.stringify(cartItems));
+      }
+  
+      console.log("addToCart::", cartItems);
+  
+      dispatch({
+        type: cartConstants.ADD_TO_CART_SUCCESS,
+        payload: { cartItems },
+      });
+    };
+  };
 
 export const updateCart = () => {
     return async dispatch => {
