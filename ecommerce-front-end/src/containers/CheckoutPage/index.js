@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { getAddress, getCartItems } from "../../actions";
+import { addOrder, getAddress, getCartItems } from "../../actions";
 import Layout from "../../components/Layout";
 import {
 	Anchor,
 	MaterialButton,
-	MaterialInput,
+	// MaterialInput,
 } from "../../components/MaterialUI";
+import Card from "../../components/UI/Card";
 import AddressForm from "./AddressForm";
 import PriceDetails from "../../components/PriceDetails";
 import "./style.css";
@@ -78,7 +79,7 @@ const Address = ({
 									width: "200px",
 									margin: "10px 0",
 								}}
-							/>
+							/>							
 						)}
 					</div>
 				) : (
@@ -96,10 +97,7 @@ const Address = ({
 
 const CheckoutPage = (props) => {
 
-	//   const [orderConfirmation, setOrderConfirmation] = useState(false);
-	//   const [paymentOption, setPaymentOption] = useState(false);
-	//   const [confirmOrder, setConfirmOrder] = useState(false);
-
+	
 	const user = useSelector((state) => state.user);
 	const auth = useSelector((state) => state.auth);
     const cart = useSelector(state => state.cart);
@@ -108,8 +106,11 @@ const CheckoutPage = (props) => {
 	const [confirmAddress, setConfirmAddress] = useState(false);
 	const [selectedAddress, setSelectedAddress] = useState(null);
 	const [orderSummary, setOrderSummary] = useState(false);
+	const [orderConfirmation, setOrderConfirmation] = useState(false);
+	const [paymentOption, setPaymentOption] = useState(false);
+	const [confirmOrder, setConfirmOrder] = useState(false);
 	const dispatch = useDispatch();
-
+	
 	useEffect(() => {
 		auth.authenticate && dispatch(getAddress());
 		auth.authenticate && dispatch(getCartItems());
@@ -155,6 +156,48 @@ const CheckoutPage = (props) => {
 		setSelectedAddress(addr);
 		setOrderSummary(true);
 	};
+	
+	const userOrderConfirmation = () => {
+		setOrderSummary(false);
+		setOrderConfirmation(true);
+		setPaymentOption(true);
+	}
+
+	const onConfirmOrder = () => {
+		setPaymentOption(false);
+		
+		const totalAmount = Object.keys(cart.cartItems).reduce((totalPrice, key) => {
+			const {price, qty} = cart.cartItems[key];                        
+			return totalPrice + (price*qty);
+		}, 0)
+
+		const items = Object.keys(cart.cartItems).map(key => ({
+			productId : key,
+			payablePrice : cart.cartItems[key].price,
+			purchasedQty : cart.cartItems[key].qty
+		}))
+
+		const payload = {
+			addressId : selectedAddress._id,
+			totalAmount,
+			items,
+			paymentStatus : "pending"
+		}
+		
+		console.log(payload);
+		dispatch(addOrder(payload))
+		setConfirmOrder(true);
+	}
+
+	if (confirmOrder) {
+		return (
+			<Layout>
+				<div>
+					Thanks for placing order with us!!
+				</div>
+			</Layout>
+		)
+	}
 
 	return (
 		<Layout>
@@ -166,13 +209,16 @@ const CheckoutPage = (props) => {
 						active={!auth.authenticate}
 						body={
 							auth.authenticate ? (
-								<div className="loggedInId">
+								<div className="stepCompleted">
 									<span style={{ fontWeight: 500 }}>{auth.user.fullName}</span>
 									<span style={{ margin: "0 5px" }}>{auth.user.email}</span>
 								</div>
 							) : (
-								<div>
-									<MaterialInput label="Email" />
+								<div style={{
+									padding: '20px'
+								}}>
+									{/* <MaterialInput label="Email" /> */}
+									Kindly login to proceed
 								</div>
 							)
 						}
@@ -184,7 +230,7 @@ const CheckoutPage = (props) => {
 						body={
 							<>
 								{confirmAddress ? (
-									<div className="loggedInId">{`${selectedAddress.address} - ${selectedAddress.pinCode}`}</div>
+									<div className="stepCompleted">{`${selectedAddress.address} - ${selectedAddress.pinCode}`}</div>
 								) : (
 									address.map((adr) => (
 										<Address 
@@ -205,10 +251,10 @@ const CheckoutPage = (props) => {
 						<AddressForm onSubmitForm={onAddressSubmit} onCancel={() => {}} />
 					) : auth.authenticate ? (
 						<CheckoutStep
-						stepNumber={"+"}
-						title={"ADD NEW ADDRESS"}
-						active={false}
-						onClick={() => setShowNewAddressForm(true)}
+							stepNumber={"+"}
+							title={"ADD NEW ADDRESS"}
+							active={false}
+							onClick={() => setShowNewAddressForm(true)}
 						/>
 					) : null}
 
@@ -216,13 +262,69 @@ const CheckoutPage = (props) => {
 						stepNumber={"3"}
 						title={"ORDER SUMMARY"}
 						active={orderSummary}
-						body={ orderSummary ? <CartPage onlyCartItems={true} /> : null}
+						body={ 
+							orderSummary ? 
+							<CartPage onlyCartItems={true} /> : 
+							orderConfirmation ? (
+								<div className='stepCompleted'>
+									{Object.keys(cart.cartItems).length} items
+								</div>
+							) :
+							null
+						}
 					/>
+
+					{ 
+						orderSummary && 
+						<Card style={{ margin: "10px 0" }}>
+							<div 
+								className="flexRow sb" 
+								style={{
+									padding: '10px 10px 10px 25px',
+									alignItems: 'center',
+								}}
+							>
+								<p>Order confirmation email will be sent to <strong>{auth.user.email}</strong></p>
+								<MaterialButton
+									title="Continue"
+									style={{ width: "200px" }}	
+									onClick={userOrderConfirmation}						
+								/>
+							</div>
+						</Card>
+					}
+
 					<CheckoutStep
 						stepNumber={4}
 						title={"PAYMENT OPTIONS"}
-						active={false}
-						body={<></>}
+						active={paymentOption}
+						body={
+							paymentOption && 
+							<div 
+								className="flexRow sb"
+								style={{
+									alignItems : "center",
+									padding: '20px'
+								}}
+							>
+								<div className="flexRow" style={{
+									alignItems : "center",									
+								}}>
+									<input 
+									style={{
+										marginBottom: '3px',
+										marginRight: '10px'
+									}} 
+									type='radio' name='paymentOption' value='cod' />
+									<div>Cash on Delivery</div>
+								</div>
+								<MaterialButton
+									title="CONFIRM ORDER"
+									style={{ width: "200px" }}	
+									onClick={onConfirmOrder}
+								/>
+							</div>
+						}
 					/>
 				</div>
                 <PriceDetails

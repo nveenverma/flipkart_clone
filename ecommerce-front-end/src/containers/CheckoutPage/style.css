@@ -38,7 +38,7 @@
 .checkoutHeader.active .stepTitle{
     color: #fff;
 }
-.loggedInId{
+.stepCompleted{
     font-size: 12px;
     margin: 0px 0 10px 55px;
     padding-bottom : 10px;
@@ -80,8 +80,4 @@
     font-size: 12px;
     letter-spacing: 1px;
     line-height: 18px;
-}
-.stepCompleted{
-    padding: 0 0 20px 60px;
-    font-size: 12px;
 }

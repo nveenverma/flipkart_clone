@@ -7,14 +7,16 @@ const Card = ({headerLeft, headerRight, children, ...rest}) => {
             className='card'
             {...rest}
         >
-            <div className='cardHeader'>
-                {
-                    headerLeft && <div>{headerLeft}</div>
-                }
-                {
-                    headerRight && <div>{headerRight}</div>
-                }
-            </div>
+            {(headerLeft || headerRight) && (
+                <div className='cardHeader'>                    
+                    {
+                        headerLeft && <div>{headerLeft}</div>
+                    }
+                    {
+                        headerRight && <div>{headerRight}</div>
+                    }
+                </div>
+                )}
             {children}            
         </div>
     )

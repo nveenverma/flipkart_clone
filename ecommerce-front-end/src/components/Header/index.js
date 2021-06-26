@@ -134,16 +134,15 @@ const Header = (props) => {
 										marginTop: "20px",
 									}}
 								/>
+								<p style={{ textAlign: "center" }}>OR</p>
+
+								<MaterialButton
+									title="Request OTP"
+									bgColor="#fafafa"
+									textColor="#fb641b"
+									// onClick={userLogin}
+								/>
 							</div>
-
-							<p style={{ textAlign: "center" }}>OR</p>
-
-							<MaterialButton
-								title="Request OTP"
-								bgColor="#fff"
-								textColor="#fb641b"
-								// onClick={userLogin}
-							/>
 						</div>
 					</div>
 				</div>
