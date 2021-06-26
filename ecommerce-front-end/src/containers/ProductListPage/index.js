@@ -3,6 +3,7 @@ import React from 'react'
 import Layout from '../../components/Layout'
 import ProductStore from './ProductStore'
 import ProductPage from './ProductPage'
+import ClothingAndAccessories from "./ClothingAndAccessories"
 import getParams from "../../utils/getParams"
 import "./style.css"
 
@@ -19,8 +20,9 @@ function ProductListPage (props) {
                 break;
             case 'page' :
                  content  = <ProductPage {...props} />
-                break;
+                 break;
             default :
+                content  = <ClothingAndAccessories {...props} />
                 break;
         }
 

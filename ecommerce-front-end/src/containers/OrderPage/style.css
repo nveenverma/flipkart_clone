@@ -2,6 +2,7 @@
     padding: 10px;
     box-sizing: border-box;
     display: flex;
+    align-items: center;
 }
 .orderImgContainer{
     width: 80px;
@@ -29,4 +30,4 @@
     display: flex;
     align-items: flex-start;
     font-size: 14px;
-  }
+}
