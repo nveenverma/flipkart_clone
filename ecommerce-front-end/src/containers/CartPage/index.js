@@ -22,7 +22,7 @@ const CartPage = (props) => {
 
     useEffect(() => {
         if (auth.authenticate) {
-            dispatch(getCartItems)
+            dispatch(getCartItems())
         }
     }, [auth.authenticate])
 
