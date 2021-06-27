@@ -14,6 +14,7 @@ const productRoutes = require("./routes/product")
 const cartRoutes = require("./routes/cart")
 const addressRoutes = require("./routes/address")
 const orderRoutes = require("./routes/order")
+const adminOrderRoutes = require("./routes/admin/order")
 const initialDataRoutes = require("./routes/admin/initialData")
 const newPageRoutes = require("./routes/admin/page")
 
@@ -48,6 +49,7 @@ app.use('/api', productRoutes);
 app.use('/api', cartRoutes);
 app.use('/api', addressRoutes);
 app.use('/api', orderRoutes);
+app.use('/api', adminOrderRoutes);
 app.use('/api', initialDataRoutes);
 app.use('/api', newPageRoutes);
 
