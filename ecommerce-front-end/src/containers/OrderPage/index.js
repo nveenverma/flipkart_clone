@@ -44,31 +44,80 @@ const OrderPage = (props) => {
           ]}
           breedIcon={<IoIosArrowForward />}
         />
-        {user.orders.map((order) => {
-          return order.items.map((item) => (
-            <Card style={{ display: "block", margin: "5px 0" }}>
-              <Link
-                to={`/order_details/${order._id}`}
-                className="orderItemContainer"
+
+        {
+          user.orders.length === 0 ? 
+          <Card 
+            style={{ display: "block", margin: "20px 0" }}
+            headerLeft="Nothing ordered yet" 
+          /> 
+          :
+          null
+        }
+
+        { user.orders.length > 0 && user.orders.map((order, index) => {
+          return (
+            <>
+              <div
+                className='flexRow sb'
+                style={{
+                  // margin: '10px',
+                  margin: '20px 0 0',
+                  padding: '10px 20px',
+                  background: '#fefefe'                
+                }}
               >
-                <div className="orderImgContainer">
-                  <img
-                    className="orderImg"
-                    src={generatePublicUrl(item.productId.productPictures[0].img)}
-                    alt="Displaying Ordered Items"
-                  />
-                </div>
-                <div className="orderRow">
-                  <div className="orderName">{item.productId.name}</div>
-                  <div className="orderPrice">
-                    <BiRupee />
-                    {item.payablePrice}
-                  </div>
-                  <div>{order.paymentStatus}</div>
-                </div>
-              </Link>
-            </Card>
-          ));
+                {index+1}. Order Summary
+                <Link
+                  to={`/order_details/${order._id}`}
+                >
+                View Order
+                </Link>
+              </div>
+
+              {
+                order.items.map((item) => (
+                  <Card 
+                    // className='flexRow sb'
+                    style={{ display: "block", margin: "5px 0" }}
+                  >
+                    <div
+                      className="orderItemContainer"
+                    >
+                      <div className="orderImgContainer">
+                        <img
+                          className="orderImg"
+                          src={generatePublicUrl(item.productId.productPictures[0].img)}
+                          alt="Displaying Ordered Items"
+                        />
+                      </div>
+                      <div className='grow'>
+                        <div className="orderRow">
+                          <p className="orderName orderedItemTitles">Item Ordered</p>
+                          <p className="orderPrice orderedItemTitles">Amount</p>
+                          <p className='orderedItemTitles'>Payment Status</p>
+                        </div>
+                        <div 
+                          style={{ marginTop: "-10px" }}
+                          className="orderRow"
+                        >
+                          <div className="orderName">
+                            {item.productId.name}
+                          </div>
+                          <div className="orderPrice">
+                            <BiRupee />
+                            {item.payablePrice}
+                          </div>
+                          <div>{order.paymentStatus}</div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </Card>
+              ))
+            }
+          </>
+          );
         })}
       </div>
     </Layout>

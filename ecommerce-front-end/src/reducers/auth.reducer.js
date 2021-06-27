@@ -77,7 +77,17 @@ const authReducer = (state = initialState, action) => {
                 error : action.payload.error
             }
             break;            
-        
+
+        case authConstants.SIGNUP_REQUEST:
+            break;
+        case authConstants.SIGNUP_SUCCESS:
+            break;
+        case authConstants.SIGNUP_FAILURE:
+            state = {
+                ...state,
+                error: action.payload.error,
+            };
+            break;        
 
         // Keep the state as it is for any default action type
         default :
