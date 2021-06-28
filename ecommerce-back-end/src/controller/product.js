@@ -2,8 +2,7 @@ const Product = require("../models/product.js");
 const slugify = require("slugify")
 const Category = require("../models/category");
 
-exports.createProducts = (req, res) => {
-    // res.status(200).json({ file : req.files, body : req.body });
+exports.createProduct = (req, res) => {
 
     const { name, price, description, category, quantity } = req.body;
 
@@ -24,15 +23,54 @@ exports.createProducts = (req, res) => {
         category,
         createdBy : req.user._id
     });
-
+    
     product.save((error, product) => {
-        if (error) {
-            return res.status(400).json({ error })
-        }
-        if (product) {
-            return res.status(201).json({ product })
-        }
+      if (error) {
+        return res.status(400).json({ error })
+      }
+      if (product) {
+        return res.status(201).json({ product })
+      }
     })
+  }
+  
+// Function to edit categories
+exports.updateProduct = async (req, res) => {
+
+    const { _id, name, price, description, category, quantity } = req.body;
+
+    let productPictures = [];
+    if (req.files.length > 0) {
+        productPictures = req.files.map(file => {
+            return ({ img : file.filename })
+        })
+    }
+
+    const product = {
+        _id, 
+        name,
+        slug : slugify(name),
+        price,
+        quantity,
+        description,
+        productPictures,
+        category,
+        createdBy : req.user._id
+    };
+
+    const updatedProduct = await Product.findOneAndUpdate(
+      { _id },
+      product,
+      { new: true },
+      (err, doc) => {
+        if (err) {
+            console.log("Something wrong when updating data : ", err);
+        }
+        console.log("Updated Product : ", doc);
+      }
+    );
+      
+    return res.status(201).json({ updatedProduct });
 }
 
 exports.getProductsBySlug = (req, res) => {
@@ -55,26 +93,18 @@ exports.getProductsBySlug = (req, res) => {
                 res.status(200).json({
                   products,
                   priceRange: {
-                    under10k: '10,000',
-                    under20k: '20,000',
-                    under30k: '30,000',
-                    under50k: '50,000',
-                    under100k: '1,00,000',
+                    budgetFriendly: '40,000',
+                    bestSellers: '80,000',
+                    premiumRange: '1,50,000',
                   },
                   productsByPrice: {
-                    under10k: products.filter((product) => product.price <= 10000),
-                    under20k: products.filter(
-                      (product) => product.price > 10000 && product.price <= 20000
+                    budgetFriendly: products.filter((product) => product.price <= 10000),
+                    bestSellers: products.filter(
+                      (product) => product.price > 40000 && product.price <= 80000
                     ),
-                    under30k: products.filter(
-                      (product) => product.price > 20000 && product.price <= 30000
-                    ),
-                    under50k: products.filter(
-                      (product) => product.price > 30000 && product.price <= 50000
-                    ),
-                    under100k: products.filter(
-                      (product) => product.price > 50000 && product.price <= 100000
-                    ),
+                    premiumRange: products.filter(
+                      (product) => product.price > 80000 && product.price <= 150000
+                    )
                   },
                 });
               }
@@ -99,3 +129,26 @@ exports.getDetailsById = (req, res) => {
         return res.status(400).json({ error : 'Params required' })
     }
 }
+
+exports.deleteProductById = (req, res) => {
+  const { productId } = req.body.payload;
+  if (productId) {
+    Product.deleteOne({ _id: productId }).exec((error, result) => {
+      if (error) return res.status(400).json({ error });
+      if (result) {
+        res.status(202).json({ result });
+      }
+    });
+  } else {
+    res.status(400).json({ error: "Params required" });
+  }
+};
+
+exports.getProducts = async (req, res) => {
+  const products = await Product.find({})
+    .select("_id name price quantity slug description productPictures category")
+    .populate({ path: "category", select: "_id name" })
+    .exec();
+
+  res.status(200).json({ products });
+};

@@ -1,6 +1,7 @@
 const Category = require("../../models/category")
 const Product = require("../../models/product")
 const Order = require("../../models/order")
+const Page = require("../../models/page")
 
 // Following is a recursive function to cover all the categories along with their sub-categories
 const createCategories = ( categories, parentId = null ) => {
@@ -36,10 +37,15 @@ exports.initialData = async (req, res) => {
                                 .populate({ path: "category", select: "_id name" })
                                 .exec();
     const orders = await Order.find({}).exec();
+    const pages = await Page.find({})
+      .select("_id title description banners products category")
+      .populate({ path: "category", select: "_id name" })
+      .exec();
 
     res.status(200).json({
         categories : createCategories(categories),
         products,
-        orders
+        orders,
+        pages
     })
 }

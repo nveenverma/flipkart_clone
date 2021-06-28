@@ -15,6 +15,7 @@ function CustomModal(props) {
         children,
         ...rest
     } = props;
+    
     return (
         <Modal show={show} onHide={handleClose} size={size}>
             <Modal.Header closeButton>

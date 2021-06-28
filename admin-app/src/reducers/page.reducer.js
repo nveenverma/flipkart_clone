@@ -1,7 +1,7 @@
 import { pageConstants } from "../actions/constants"
 
 const initState = {
-    page : {},
+    pages : {},
     loading : false,
     error : null
 }
@@ -26,6 +26,12 @@ const pageReducer =  (state = initState, action) => {
                 loading : false,
                 error : action.payload.error
             }
+            break;
+        case pageConstants.GET_ALL_PAGES_SUCCESS:
+            state = {
+                ...state,
+                pages: action.payload.pages
+            };
             break;
         default :
             state = {

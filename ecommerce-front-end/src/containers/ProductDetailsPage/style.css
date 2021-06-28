@@ -24,19 +24,21 @@
     border: 2px solid #2874f0;
 }
 .productDescContainer{
-    width: 485px;
+    width: 300px;
 }
 .productDescImgContainer{
-    width: 485px;
-    height: 440px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     overflow: hidden;
-    text-align: center;
-    border: 1px solid #f0f0f0;
 }
 .productDescImgContainer > img{
-    max-width: 100%;
+    /* max-width: 100%;
     max-height: 100%;
-    object-fit: contain;
+    object-fit: contain; */
+    flex-shrink: 0;
+    min-width: 100%;
+    min-height: 100%
 }
 .breed ul{
     padding: 0;

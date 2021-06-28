@@ -23,3 +23,24 @@ export const createPage = (form) => {
         }
     }
 }
+
+// new action
+export const getPages = () => {
+    return async (dispatch) => {
+      try {
+        dispatch({ type: pageConstants.GET_ALL_PAGES_REQUEST });
+        const res = await axios.get(`pages`);
+        if (res.status === 200) {
+          const { pages } = res.data;
+          dispatch({
+            type: pageConstants.GET_ALL_PAGES_SUCCESS,
+            payload: { pages },
+          });
+        } else {
+          dispatch({ type: pageConstants.GET_ALL_PAGES_FAILURE });
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  };

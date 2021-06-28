@@ -57,7 +57,10 @@ const ProductDetailsPage = (props) => {
 						</div>
 
 						{/* action buttons */}
-						<div className="flexRow">
+						<div 
+							style={{"marginTop" : '20px'}}
+							className="flexRow"
+						>
 							<MaterialButton
 								title="ADD TO CART"
 								bgColor="#ff9f00"
@@ -73,19 +76,12 @@ const ProductDetailsPage = (props) => {
 									props.history.push('/cart')
 								}}
 							/>
-							<MaterialButton
-								title="BUY NOW"
-								bgColor="#fb641b"
-								textColor="#ffffff"
-								style={{
-									marginLeft: "5px",
-								}}
-								icon={<AiFillThunderbolt />}
-							/>
 						</div>
 					</div>
 				</div>
-				<div>
+				<div
+					style={{marginLeft : '50px'}}
+				>
 					{/* home > category > subCategory > productName */}
 					<div className="breed">
 						<ul>

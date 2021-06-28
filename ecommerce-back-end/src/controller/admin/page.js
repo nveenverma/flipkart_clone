@@ -55,3 +55,12 @@ exports.getPage = (req, res) => {
         console.log("Type is not equal to Page")
     }
 }
+
+exports.getPages = async (req, res) => {
+    const pages = await Page.find({})
+      .select("_id title description banners products category")
+      .populate({ path: "category", select: "_id name" })
+      .exec();
+  
+    res.status(200).json({ pages });
+};

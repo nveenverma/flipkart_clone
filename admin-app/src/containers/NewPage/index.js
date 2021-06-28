@@ -5,12 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 import Layout from "../../components/Layout";
 import Input from "../../components/UI/Input"
 import Modal from "../../components/UI/Modal"
+import Card from "../../components/UI/Card"
 import linearCategories from "../../helpers/linearCategories"
 import { createPage } from "../../actions"
 
 
 const NewPage = () => {
-    
     
     const category = useSelector(state => state.category)
     const page = useSelector(state => state.page)
@@ -182,8 +182,65 @@ const NewPage = () => {
             <Button
                 onClick={() => setShowModal(true)}
             >
-                Click here
+                Add Page
             </Button>
+            {
+                page.pages.map((item, index) => (
+                    <Card
+                        headerLeft={
+                            <>
+                                Category Name :  {" "}
+                                <strong>{item.category && item.category.name}</strong>
+                            </>
+                        }
+                        key={index}
+                        style={{
+                            margin : "20px 0"
+                        }}
+                        >
+                        <div
+                            style={{
+                                padding : "20px"
+                            }}
+                            >
+                            <div>Banners</div>
+                            <div>
+                                {
+                                    item.banners && item.banners.map((banner, bannerIdx) => (
+                                        <img 
+                                        key={bannerIdx}
+                                            style={{
+                                                maxWidth : '1000px',
+                                                margin: '10px 0'
+                                            }}
+                                            src={banner.img} alt="" />
+                                    ))
+                                }
+                            </div>
+                        </div>
+                        <div
+                            style={{
+                                padding : "20px"
+                            }}
+                        >
+                            <div>Products</div>
+                            <div>
+                                {
+                                    item.products && item.products.map((product, productIdx) => (
+                                        <img 
+                                            key={productIdx}
+                                            style={{
+                                                maxWidth : '1000px',
+                                                margin: '10px 0'
+                                            }}
+                                            src={product.img} alt="" />
+                                    ))
+                                }
+                            </div>
+                        </div>
+                    </Card>
+                ))
+            }
         </Layout>
     )
 };
