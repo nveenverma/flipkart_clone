@@ -20,6 +20,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: flex-end;
+    margin: 0 10px;
 }
 .logo .logoimage{
     width: 75px;
@@ -27,6 +28,7 @@
 .exploreText{ 
     font-size: 10px;
     font-style: italic; 
+    color: white;
 }
 .plusText{ 
     font-size: 10px; 

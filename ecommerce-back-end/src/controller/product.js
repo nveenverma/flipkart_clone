@@ -98,7 +98,7 @@ exports.getProductsBySlug = (req, res) => {
                     premiumRange: '1,50,000',
                   },
                   productsByPrice: {
-                    budgetFriendly: products.filter((product) => product.price <= 10000),
+                    budgetFriendly: products.filter((product) => product.price <= 40000),
                     bestSellers: products.filter(
                       (product) => product.price > 40000 && product.price <= 80000
                     ),
@@ -121,6 +121,7 @@ exports.getDetailsById = (req, res) => {
 
     if (productId) {
         Product.findOne({ _id : productId })
+        .populate({ path: "category", select: "_id name parentId" })
         .exec((error, product) => {
             if (error) return res.status(400).json({ error })
             if (product) res.status(200).json({ product })            

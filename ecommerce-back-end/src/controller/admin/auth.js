@@ -59,9 +59,9 @@ exports.signin = (req, res) => {
             if (isPassword && user.role=='admin') {
                 
                 // Generating JSON Web Token from the id returned
-                const token = jwt.sign({ _id : user._id, role : user.role }, process.env.JWT_TOKEN, { expiresIn : '2d' });
+                const token = jwt.sign({ _id : user._id, role : user.role }, process.env.JWT_TOKEN, { expiresIn : '1d' });
                 const { _id, firstName, lastName, email, role, fullName } = user;
-                res.cookie('token', token, { expiresIn : '1h' });
+                res.cookie('token', token, { expiresIn : '1d' });
                 
                 // Return JSON Web Token along with the user profile
                 return res.status(200).json({

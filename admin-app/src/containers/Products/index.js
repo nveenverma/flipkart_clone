@@ -28,6 +28,15 @@ function Products() {
 	const category = useSelector((state) => state.category);
 	const product = useSelector((state) => state.product);
 	const dispatch = useDispatch();
+
+	const clearProductInputFields = () => {
+		setProductName("");
+		setPrice("");
+		setQuantity("");
+		setDescription("")
+		setCategoryId("")
+		setProductPictures([]);
+	}
 	
 	useEffect(() => {
 		if (showProductEditModal) {
@@ -39,12 +48,7 @@ function Products() {
 			setCategoryId(productDetails.category._id)
 			setProductPictures(productDetails.productPictures);
 		} else {
-			setProductName("");
-			setPrice("");
-			setQuantity("");
-			setDescription("")
-			setCategoryId("")
-			setProductPictures([]);
+			clearProductInputFields();
 		}
 	}, [showProductEditModal])
 
@@ -75,6 +79,7 @@ function Products() {
 		}
 
 		dispatch(addProduct(form));
+		clearProductInputFields();
 		setShow(false);
 	};
 
@@ -279,6 +284,7 @@ function Products() {
 
 		dispatch(updateProduct(form));
 		dispatch(getProducts());
+		clearProductInputFields();
 		setShowProductEditModal(false);
 	};
 

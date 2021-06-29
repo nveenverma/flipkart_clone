@@ -8,14 +8,14 @@ const token = window.localStorage.getItem('token');
 const axiosInstance = axios.create({
     baseURL : api,
     headers : {
-        'Authorization' : token ? `Bearer ${token}` : ''
+        'authorization' : token ? `Bearer ${token}` : ''
     }
 }); 
 
 axiosInstance.interceptors.request.use((req) => {
     const { auth } = store.getState();
     if (auth.token) {
-        req.headers.Authorization = `Bearer ${token}`;
+        req.headers.authorization = `Bearer ${token}`;
     }
     return req;
 })
@@ -23,7 +23,7 @@ axiosInstance.interceptors.request.use((req) => {
 axiosInstance.interceptors.response.use(
     res => { return res },
     error => {
-        console.log(error.response)
+        console.log("Error from axios interceptors in Frontend : ", error.response)
         const status = error.response ? error.response.status : 500;
         if (status && status === 500) {
             localStorage.clear()

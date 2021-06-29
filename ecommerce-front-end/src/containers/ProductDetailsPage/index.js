@@ -9,22 +9,35 @@ import { MaterialButton } from "../../components/MaterialUI";
 import { generatePublicUrl } from "../../urlConfig";
 import { getProductDetailsById, addToCart } from "../../actions";
 import "./style.css";
+import { useState } from "react";
 
 const ProductDetailsPage = (props) => {
 	const dispatch = useDispatch();
 	const product = useSelector((state) => state.product);
+	const category = useSelector(state => state.category);
+
+	const [productName, setProductName] = useState('Product Name')
+	const [categoryName, setCategoryName] = useState('Category 1')
+	const [subCategoryName, setSubCategoryName] = useState('Category 2')
+
+	console.log("Categories : ", category)
 
 	useEffect(() => {
 		const { productId } = props.match.params;
 		const payload = {
 			params: { productId },
 		};
-		console.log(
-			"ProductId when loading product details Page : ",
-			productId
-		);
 		dispatch(getProductDetailsById(payload));
 	}, []);
+	
+	useEffect(() => {
+		console.log("Product Details returned : ", product.productDetails)		
+		product.productDetails.name && setProductName(product.productDetails.name)
+		if (product.productDetails.category) {
+			setCategoryName(category.categories.filter(cat => cat._id === product.productDetails.category.parentId)[0].name)
+			setSubCategoryName(product.productDetails.category.name)
+		}
+	}, [product.productDetails])
 
 	if (Object.keys(product.productDetails).length === 0) {
 		return null;
@@ -32,8 +45,6 @@ const ProductDetailsPage = (props) => {
 
 	return (
 		<Layout>
-			{/* <div>Single Product Page</div>
-            <p>{JSON.stringify(product.productDetails.name)}</p> */}
 			<div className="productDescriptionContainer">
 				<div className="flexRow">
 					<div className="verticalImageStack">
@@ -83,27 +94,31 @@ const ProductDetailsPage = (props) => {
 					style={{marginLeft : '50px'}}
 				>
 					{/* home > category > subCategory > productName */}
-					<div className="breed">
+					<div 
+						className="breed">
+						
 						<ul>
 							<li>
 								<a href="#">Home</a>
 								<IoIosArrowForward />
 							</li>
 							<li>
-								<a href="#">Mobiles</a>
+								<a href="#">
+									{categoryName}
+								</a>
 								<IoIosArrowForward />
 							</li>
 							<li>
-								<a href="#">Samsung</a>
+								<a href="#">{subCategoryName}</a>
 								<IoIosArrowForward />
 							</li>
 							<li>
-								<a href="#">{product.productDetails.name}</a>
+								<a href="#">{productName}</a>
 							</li>
 						</ul>
 					</div>
 					{/* product description */}
-					<div className="productDetails">
+					<div className="productDetails" >
 						<p className="productTitle">
 							{product.productDetails.name}
 						</p>

@@ -7,7 +7,7 @@ import Card from '../../components/UI/Card'
 import { MaterialButton } from "../../components/MaterialUI"
 import PriceDetails from "../../components/PriceDetails"
 import CartItem from "./CartItem"
-import { addToCart, getCartItems } from '../../actions'
+import { addToCart, getCartItems, removeCartItem } from '../../actions'
 
 const CartPage = (props) => {
     
@@ -37,6 +37,10 @@ const CartPage = (props) => {
         console.log("params from onQuantityDecrement function from CartPage : ", {_id, qty})
         dispatch(addToCart({ _id, name, price, img }, -1));
     }
+
+    const onRemoveCartItem = (_id) => {
+        dispatch(removeCartItem({ productId: _id }));
+      };
 
     if (props.onlyCartItems) {
         return (
@@ -74,6 +78,7 @@ const CartPage = (props) => {
                                 cartItem={cartItems[item]}
                                 onQuantityInc={onQuantityIncrement}
                                 onQuantityDec={onQuantityDecrement}
+                                onRemoveCartItem={onRemoveCartItem}
                             />
                         )
                     }

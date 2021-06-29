@@ -16,9 +16,12 @@ const storage = multer.diskStorage({
 exports.upload = multer({ storage });
 
 exports.requireSignIn = (req, res, next) => {
+    console.log("Reached requireSignIn")
     if (req.headers.authorization) {
         const token = req.headers.authorization.split(" ")[1];
         const user = jwt.verify(token, process.env.JWT_TOKEN);
+        console.log("token : ", token)
+        console.log("user : ", user)
         req.user = user;
     } else {
         return res.status(400).json({ message : "Authorization Required" })
@@ -27,6 +30,7 @@ exports.requireSignIn = (req, res, next) => {
 }
 
 exports.userMiddleware = (req, res, next) => {
+    console.log("Reached userMiddleWare")
     if (req.user.role != "user") {
         res.status(400).json({ message : "Access Denied" })
     }
@@ -34,6 +38,7 @@ exports.userMiddleware = (req, res, next) => {
 }
 
 exports.adminMiddleware = (req, res, next) => {
+    console.log("Reached adminMiddleWare")
     if (req.user.role != "admin") {
         res.status(400).json({ message : "Access Denied" })
     }

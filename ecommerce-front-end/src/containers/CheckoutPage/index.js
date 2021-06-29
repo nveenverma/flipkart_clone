@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { addOrder, getAddress, getCartItems } from "../../actions";
+import { addOrder, getAddress, getCartItems, getOrders } from "../../actions";
 import Layout from "../../components/Layout";
 import {
 	Anchor,
@@ -96,7 +96,6 @@ const Address = ({
 }
 
 const CheckoutPage = (props) => {
-
 	
 	const user = useSelector((state) => state.user);
 	const auth = useSelector((state) => state.auth);
@@ -112,8 +111,10 @@ const CheckoutPage = (props) => {
 	const dispatch = useDispatch();
 	
 	useEffect(() => {
-		auth.authenticate && dispatch(getAddress());
-		auth.authenticate && dispatch(getCartItems());
+		if (auth.token) {
+			auth.authenticate && dispatch(getAddress());
+			auth.authenticate && dispatch(getCartItems());
+		}
 		!auth.authenticate && setAddress([]);
 	}, [auth.authenticate]);
 
@@ -191,13 +192,15 @@ const CheckoutPage = (props) => {
 	}
 
 	if (confirmOrder) {
-		return (
-			<Layout>
-				<div>
-					Thanks for placing order with us!!
-				</div>
-			</Layout>
-		)
+		// return (
+		// 	<Layout>
+		// 		<div>
+		// 			Thanks for placing order with us!!
+		// 		</div>
+		// 	</Layout>
+		// )
+		dispatch(getOrders());
+		props.history.push('/account/orders');
 	}
 
 	return (

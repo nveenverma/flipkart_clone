@@ -30,9 +30,14 @@ exports.addAddress = (req, res) => {
 }
 
 exports.getAddress = (req, res) => {
+    console.log("Reached getAddress controller function")
     UserAddress.findOne({ user : req.user._id })
     .exec((error, userAddress) => {
         if (error) return res.status(400).json({ error })
-        if (userAddress) res.status(200).json({ userAddress })
+        if (userAddress) {
+            res.status(200).json({ userAddress })
+        } else {
+            res.status(204).json({ "Message" : "No Address added for current user"});
+        }
     })
 }
