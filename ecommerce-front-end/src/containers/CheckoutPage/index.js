@@ -116,6 +116,7 @@ const CheckoutPage = (props) => {
 			auth.authenticate && dispatch(getCartItems());
 		}
 		!auth.authenticate && setAddress([]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [auth.authenticate]);
 
 	useEffect(() => {
@@ -192,13 +193,6 @@ const CheckoutPage = (props) => {
 	}
 
 	if (confirmOrder) {
-		// return (
-		// 	<Layout>
-		// 		<div>
-		// 			Thanks for placing order with us!!
-		// 		</div>
-		// 	</Layout>
-		// )
 		dispatch(getOrders());
 		props.history.push('/account/orders');
 	}

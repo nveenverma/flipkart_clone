@@ -20,6 +20,7 @@ const ClothingAndAccessories = (props) => {
   useEffect(() => {
     const { match } = props;
     dispatch(getProductsBySlug(match.params.slug));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

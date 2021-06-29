@@ -17,6 +17,7 @@ const OrderDetailsPage = (props) => {
       orderId: props.match.params.orderId,
     };
     dispatch(getOrder(payload));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const formatDate = (date) => {

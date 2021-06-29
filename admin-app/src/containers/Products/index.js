@@ -50,6 +50,7 @@ function Products() {
 		} else {
 			clearProductInputFields();
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [showProductEditModal])
 
 	// Common Functions //
@@ -98,7 +99,7 @@ function Products() {
 						<Input
 							label="Product Name"
 							value={productName}
-							handleChange={(e) => setProductName(e.target.value)}
+							onChange={(e) => setProductName(e.target.value)}
 							placeholder={"Enter Product Name"}
 						/>
 					</Col>
@@ -107,7 +108,7 @@ function Products() {
 						<Input
 							label="Quantity"
 							value={quantity}
-							handleChange={(e) => setQuantity(e.target.value)}
+							onChange={(e) => setQuantity(e.target.value)}
 							placeholder={"Enter Quantity"}
 						/>
 					</Col>
@@ -117,7 +118,7 @@ function Products() {
 						<Input
 							label="Price"
 							value={price}
-							handleChange={(e) => setPrice(e.target.value)}
+							onChange={(e) => setPrice(e.target.value)}
 							placeholder={"Enter Price"}
 						/>
 					</Col>
@@ -125,7 +126,7 @@ function Products() {
 						<Input
 							label="Description"
 							value={description}
-							handleChange={(e) => setDescription(e.target.value)}
+							onChange={(e) => setDescription(e.target.value)}
 							placeholder={"Enter Description"}
 						/>
 					</Col>
@@ -305,7 +306,7 @@ function Products() {
 								<Input
 									label="Product Name"
 									value={productName}
-									handleChange={(e) =>
+									onChange={(e) =>
 										setProductName(e.target.value)
 									}
 									placeholder={"Enter Product Name"}
@@ -316,7 +317,7 @@ function Products() {
 								<Input
 									label="Quantity"
 									value={quantity}
-									handleChange={(e) =>
+									onChange={(e) =>
 										setQuantity(e.target.value)
 									}
 									placeholder={"Enter Quantity"}
@@ -328,7 +329,7 @@ function Products() {
 								<Input
 									label="Price"
 									value={price}
-									handleChange={(e) =>
+									onChange={(e) =>
 										setPrice(e.target.value)
 									}
 									placeholder={"Enter Price"}
@@ -338,7 +339,7 @@ function Products() {
 								<Input
 									label="Description"
 									value={description}
-									handleChange={(e) =>
+									onChange={(e) =>
 										setDescription(e.target.value)
 									}
 									placeholder={"Enter Description"}

@@ -12,7 +12,6 @@ import "./style.css"
 
 const ProductStore = (props) => {
     const product = useSelector((state) => state.product);
-    const priceRange = product.priceRange;
     const mobileCategories = {
       'bestSellers' : 'Best Sellers',
       'premiumRange' : 'Premium Range',
@@ -23,6 +22,7 @@ const ProductStore = (props) => {
     useEffect(() => {
       const { match } = props;
       dispatch(getProductsBySlug(match.params.slug));
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
   
     return (

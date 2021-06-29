@@ -19,6 +19,7 @@ const ProductPage = (props) => {
 			params,
 		};
 		dispatch(getProductPage(payload));
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return (

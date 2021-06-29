@@ -17,7 +17,7 @@ function CustomModal(props) {
     } = props;
     
     return (
-        <Modal show={show} onHide={handleClose} size={size}>
+        <Modal animation={false} show={show} onHide={handleClose} size={size}>
             <Modal.Header closeButton>
                 <Modal.Title>{modalTitle}</Modal.Title>
             </Modal.Header>
@@ -36,14 +36,23 @@ function CustomModal(props) {
                             {btn.label}
                         </Button>
                     ) : 
-                    <Button 
-                        variant="dark"
-                        className="btn-sm" 
-                        {...rest}
-                        onClick={onSubmit}
-                    >
-                        Save Changes
-                    </Button>
+                    <>
+                        <Button 
+                            variant="primary"
+                            className="btn-sm" 
+                            {...rest}
+                            onClick={onSubmit}
+                        >
+                            Save Changes
+                        </Button>
+                        <Button 
+                            variant="secondary"
+                            className="btn-sm"                         
+                            onClick={handleClose}
+                        >
+                            Cancel
+                        </Button>
+                    </>
                 }
             </Modal.Footer>
         </Modal> 

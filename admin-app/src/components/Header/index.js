@@ -17,7 +17,10 @@ function Header () {
       return (
           <Nav>
             <li className="nav-item">
-              <span className="nav-link" onClick={logout} style={{ cursor : "pointer" }} >Signout</span>
+              <span className="nav-link">{auth.authenticate && auth.user.firstName}</span>
+            </li>
+            <li className="nav-item">
+              <span className="nav-link" onClick={logout} style={{ cursor : "pointer", color: "white" }} >Signout</span>
             </li>
           </Nav>
       )

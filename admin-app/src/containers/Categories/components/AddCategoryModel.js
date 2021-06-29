@@ -16,7 +16,6 @@ const AddCategoryModel = (props) => {
 		setParentCategoryId,
 		setCategoryImage,
 		categoriesList,
-		...rest
 	} = props;
 
 	return (
@@ -30,7 +29,7 @@ const AddCategoryModel = (props) => {
 				<Col>
 					<Input
 						value={categoryName}
-						handleChange={(e) => setCategoryName(e.target.value)}
+						onChange={(e) => setCategoryName(e.target.value)}
 						placeholder={"Enter Category Name"}
 						className='form-control-sm'
 					/>

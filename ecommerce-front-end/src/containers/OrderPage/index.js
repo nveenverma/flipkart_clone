@@ -15,21 +15,11 @@ import "./style.css";
 const OrderPage = (props) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  // const auth = useSelector(state => state.auth)
 
   useEffect(() => {
     dispatch(getOrders());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  // useEffect(() => {
-  //   if (!auth.authenticate) {
-  //     return (
-  //       <div>
-  //         Kindly login to view your orders
-  //       </div>
-  //     )
-  //   }
-  // }, [auth.authenticate])
 
   console.log(user);
 

@@ -11,6 +11,7 @@ function MenuHeader () {
 
     useEffect(() => {
         dispatch(getAllCategory());
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     // Below function is used to display all the categories

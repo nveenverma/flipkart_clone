@@ -1,28 +1,30 @@
 .overview {
-	background: rgba(30, 96, 145, 0.95);
-	border: none;
-	position: absolute;
 	display: flex;
-	outline: none;
+	align-items: center;
+	justify-content: space-between;
+	
+	position: absolute;
 	width: calc(60% - 60px);
-	/* height: 300px; */
-	top: 20%;
+	top: 25%;
 	left: 20%;
-	margin: 0 auto;
-	padding: 10px 30px;
-	/* color: rgba(217, 237, 146, 1); */
+	
+	background: rgba(30, 96, 145, 0.95);
 	color: rgba(255, 255, 255, 0.9);
-	-webkit-box-shadow: 10px 20px 5px 10px rgba(217, 237, 146, 0.8);
 	box-shadow: 10px 20px 5px 10px rgba(217, 237, 146, 0.8);
+	-webkit-box-shadow: 10px 20px 5px 10px rgba(217, 237, 146, 0.8);
+	
+	outline: none;
+	border: none;
 	border-radius: 10px;
     line-height: 1.5;
+	margin: 0 auto;
+	padding: 20px 30px;
 }
 
 .innerContainer {
-    padding: 10px;
-	width: 40%;
-	margin: 0 4%;
 	text-align: left;
+    padding: 0px 4%;
+	width: 40%;
 }
 
 .innerContainer > ol {
@@ -34,8 +36,9 @@ ul {
 	list-style-type: none;
 	padding-left: 0;
 }
-.innerContainer::first-of-type {
-    border: 5px solid whitesmoke;
+
+.innerContainer:first-of-type {
+    border-right: 5px solid whitesmoke;
 }
 
 .title {

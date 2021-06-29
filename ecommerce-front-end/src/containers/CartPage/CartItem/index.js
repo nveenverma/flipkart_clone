@@ -1,14 +1,11 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
 
 import { generatePublicUrl } from "../../../urlConfig";
-import { addToCart } from "../../../actions"
 
 import "./style.css";
 
 const CartItem = (props) => {
 
-    const dispatch = useDispatch();
 	const { _id, name, price, img } = props.cartItem;
 	const [qty, setQty] = useState(props.cartItem.qty);
 

@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { IoIosArrowForward, IoIosStar, IoMdCart } from "react-icons/io";
 import { BiRupee } from "react-icons/bi";
-import { AiFillThunderbolt } from "react-icons/ai";
 
 import Layout from "../../components/Layout";
 import { MaterialButton } from "../../components/MaterialUI";
@@ -28,6 +27,7 @@ const ProductDetailsPage = (props) => {
 			params: { productId },
 		};
 		dispatch(getProductDetailsById(payload));
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 	
 	useEffect(() => {
@@ -37,6 +37,7 @@ const ProductDetailsPage = (props) => {
 			setCategoryName(category.categories.filter(cat => cat._id === product.productDetails.category.parentId)[0].name)
 			setSubCategoryName(product.productDetails.category.name)
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [product.productDetails])
 
 	if (Object.keys(product.productDetails).length === 0) {
@@ -99,21 +100,21 @@ const ProductDetailsPage = (props) => {
 						
 						<ul>
 							<li>
-								<a href="#">Home</a>
+								<a href="/#">Home</a>
 								<IoIosArrowForward />
 							</li>
 							<li>
-								<a href="#">
+								<a href="/#">
 									{categoryName}
 								</a>
 								<IoIosArrowForward />
 							</li>
 							<li>
-								<a href="#">{subCategoryName}</a>
+								<a href="/#">{subCategoryName}</a>
 								<IoIosArrowForward />
 							</li>
 							<li>
-								<a href="#">{productName}</a>
+								<a href="/#">{productName}</a>
 							</li>
 						</ul>
 					</div>

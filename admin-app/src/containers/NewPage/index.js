@@ -101,7 +101,7 @@ const NewPage = () => {
                     <Col>
                         <Input 
                             value={categoryId}
-                            handleChange={onCategoryChange}
+                            onChange={onCategoryChange}
                             placeholder={"select category"}
                             options={categories}
                             type={'select'}
@@ -114,7 +114,7 @@ const NewPage = () => {
                         <Input
                             className="form-control form-control-sm"
                             value={title}
-                            handleChange={(e) => setTitle(e.target.value)}
+                            onChange={(e) => setTitle(e.target.value)}
                             placeholder={'Page Title'}
                         >
                         </Input>
@@ -126,7 +126,7 @@ const NewPage = () => {
                         <Input
                             className="form-control form-control-sm"
                             value={desc}
-                            handleChange={(e) => setDesc(e.target.value)}
+                            onChange={(e) => setDesc(e.target.value)}
                             placeholder={'Enter Description'}
                         >
                         </Input>
@@ -147,7 +147,7 @@ const NewPage = () => {
                         <Input
                             type="file"
                             name="banners"
-                            handleChange={handleBannerImages}
+                            onChange={handleBannerImages}
                             >
                         </Input>
                     </Col>
@@ -167,7 +167,7 @@ const NewPage = () => {
                         <Input
                             type="file"
                             name="products"
-                            handleChange={handleProductImages}
+                            onChange={handleProductImages}
                         >
                         </Input>
                     </Col>
@@ -185,7 +185,7 @@ const NewPage = () => {
                 Add Page
             </Button>
             {
-                page.pages.map((item, index) => (
+                page.pages && page.pages.map((item, index) => (
                     <Card
                         headerLeft={
                             <>

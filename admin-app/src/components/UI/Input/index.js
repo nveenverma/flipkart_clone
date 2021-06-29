@@ -18,12 +18,14 @@ function Input(props) {
 	switch (props.type) {
 		case "select":
 			input = (
-				<Form.Group>
+				<Form.Group
+					// ref
+				>
 					{props.label && <Form.Label>{props.label}</Form.Label>}
                     <select
                         className='form-control form-control-sm'
                         value={props.value}
-                        onChange={props.handleChange}
+                        onChange={props.onChange}
                     >
                         <option value=''>{props.placeholder}</option>
                         {
@@ -47,7 +49,7 @@ function Input(props) {
 						type={props.type}
 						placeholder={props.placeholder}
 						value={props.value}
-						onChange={props.handleChange}
+						onChange={props.onChange}
 						{...props}
 					/>
 					<Form.Text className="text-muted">

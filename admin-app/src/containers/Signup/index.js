@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Col, Container, Form, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { Redirect } from "react-router-dom"
@@ -14,8 +14,19 @@ function Signup() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const auth = useSelector(state => state.auth)
+    const user = useSelector(state => state.user)
     const userReducer = useSelector(state => state.user)
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (!user.loading) {
+            setFirstName("")
+            setLastName("")
+            setEmail("")
+            setPassword("")
+        }        
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [user.loading])
 
     // This will run on submitting the Signup Form
     const userSignup = e => {
@@ -50,7 +61,7 @@ function Signup() {
                                         type="text" 
                                         placeholder="First Name"
                                         value={firstName}
-                                        handleChange={e=>setFirstName(e.target.value)}
+                                        onChange={e=>setFirstName(e.target.value)}
                                     />    
                                 </Col>
                                 <Col md={{ span : 6 }}>
@@ -59,7 +70,7 @@ function Signup() {
                                         type="text" 
                                         placeholder="Last Name"
                                         value={lastName}
-                                        handleChange={e=>setLastName(e.target.value)}
+                                        onChange={e=>setLastName(e.target.value)}
                                     />    
                                 </Col>
                             </Row>
@@ -69,14 +80,14 @@ function Signup() {
                                 type="email" 
                                 placeholder="Enter email"
                                 value={email}
-                                handleChange={(e) => setEmail(e.target.value)}                                                               
+                                onChange={(e) => setEmail(e.target.value)}                                                               
                             />
                             <Input 
                                 label="Password"
                                 type="password" 
                                 placeholder="Password"         
                                 value={password} 
-                                handleChange={e => setPassword(e.target.value)}                       
+                                onChange={e => setPassword(e.target.value)}                       
                             />                            
                             <Button variant="primary" type="submit">
                                 Submit

@@ -13,7 +13,7 @@ function Homepage() {
 				style={{
 					backgroundImage: `url(${heroImg})`,
 					backgroundColor: "#cccccc",
-					height: "600px",
+					height: "625px",
 					backgroundPosition: "top",
 					backgroundRepeat: "no-repeat",
 					backgroundSize: "cover",

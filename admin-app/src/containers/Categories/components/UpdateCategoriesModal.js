@@ -37,7 +37,7 @@ const UpdateCategoriesModal = (props) => {
 							<Input
 								value={item.name}
 								className="form-control-sm"
-								handleChange={(e) =>
+								onChange={(e) =>
 									handleCategoryInput(
 										"name",
 										e.target.value,
@@ -103,7 +103,7 @@ const UpdateCategoriesModal = (props) => {
 							<Input
 								value={item.name}
 								className="form-control-sm"
-								handleChange={(e) =>
+								onChange={(e) =>
 									handleCategoryInput(
 										"name",
 										e.target.value,

@@ -41,7 +41,7 @@ function Signin() {
                                 type="email" 
                                 placeholder="Enter email"
                                 value={email}
-                                handleChange={(e) => setEmail(e.target.value)}                                                           
+                                onChange={(e) => setEmail(e.target.value)}                                                           
                             />
 
                             <Input 
@@ -49,7 +49,7 @@ function Signin() {
                                 type="password"
                                 placeholder="Password"                  
                                 value={password} 
-                                handleChange={e => setPassword(e.target.value)}              
+                                onChange={e => setPassword(e.target.value)}              
                             />
                             <Button variant="primary" type="submit">
                                 Submit

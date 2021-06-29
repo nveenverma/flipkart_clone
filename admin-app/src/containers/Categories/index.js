@@ -18,7 +18,6 @@ import {
 
 import {
 	addCategory,
-	getAllCategory,
 	updateCategories,
 	deleteCategoriesAction,
 } from "../../actions";
@@ -134,12 +133,6 @@ function Categories() {
 			alert("Category Name Required")
 			return;
 		}
-
-		const cat = {
-			categoryName,
-			parentCategoryId,
-			categoryImage,
-		};
 
 		form.append("name", categoryName);
 		form.append("parentId", parentCategoryId);

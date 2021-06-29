@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { IoIosArrowDown, IoIosCart, IoIosSearch } from "react-icons/io";
+import { IoIosArrowDown, IoIosSearch } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 
-import { login, signout, getCartItems, signup as _signup } from "../../actions";
+import { login, signout, signup as _signup } from "../../actions";
 import {
 	Modal,
 	MaterialInput,
@@ -22,7 +22,6 @@ const Header = (props) => {
 	const [signup, setSignup] = useState(false);
 	const [firstName, setFirstName] = useState("");
 	const [lastName, setLastName] = useState("");
-	const [error, setError] = useState("");
 
 	const auth = useSelector((state) => state.auth);
 	const cart = useSelector((state) => state.cart);
@@ -63,7 +62,7 @@ const Header = (props) => {
 	const renderLoggedInMenu = () => {
 		return (
 			<DropdownMenu
-				menu={<a className="fullName">{auth.user.firstName}</a>}
+				menu={<a href="/#" className="fullName">{auth.user.firstName}</a>}
 				menus={[
 					{ label: "My Profile", href: "", icon: null },
 					{ label: "SuperCoin Zone", href: "", icon: null },
@@ -100,6 +99,7 @@ const Header = (props) => {
 							setSignup(false);
 							setLoginModal(true);
 						}}
+						href="/#"
 					>
 						Login
 					</a>
@@ -131,6 +131,7 @@ const Header = (props) => {
 								color: "#2874f0",
 								cursor: "pointer"
 							}}
+							href="/#"
 						>
 							Sign Up
 						</a>
@@ -254,7 +255,7 @@ const Header = (props) => {
 			  {auth.authenticate ? renderLoggedInMenu() : renderNonLoggedInMenu()}
 			  <DropdownMenu
 				menu={
-				  <a className="more">
+				  <a href="/#" className="more">
 					<span>More</span>
 					<IoIosArrowDown />
 				  </a>

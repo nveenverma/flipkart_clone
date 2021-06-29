@@ -36,7 +36,8 @@ const AddressForm = (props) => {
 	const dispatch = useDispatch();
 	const user = useSelector((state) => state.user);
 	const [submitFlag, setSubmitFlag] = useState(false);
-	const [id, setId] = useState(initialData ? initialData._id : "");
+
+	const id = initialData ? initialData._id : ""
   
 	const inputContainer = {
 	  width: "100%",
@@ -90,6 +91,7 @@ const AddressForm = (props) => {
 		}
 		props.onSubmitForm(_address);
 	  }
+	  // eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [user.address]);
   
 	const renderAddressForm = () => {

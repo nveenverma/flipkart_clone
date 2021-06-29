@@ -24,6 +24,7 @@ const CartPage = (props) => {
         if (auth.authenticate) {
             dispatch(getCartItems())
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [auth.authenticate])
 
     const onQuantityIncrement = (_id, qty) => {
